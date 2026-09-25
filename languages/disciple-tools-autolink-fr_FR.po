@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disciple-tools-"
 "autolink\n"
 "POT-Creation-Date: 2026-09-25T08:46:16+00:00\n"
-"PO-Revision-Date: 2025-09-17 12:03+0000\n"
+"PO-Revision-Date: 2026-09-25 11:47+0000\n"
 "Last-Translator: Corsacca <translator@disciple.tools>\n"
 "Language-Team: French <https://translate.disciple.tools/projects/disciple-"
 "tools/disciple-tools-autolink/fr_FR/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.3\n"
+"X-Generator: Weblate 2026.9.1\n"
 "X-Domain: disciple-tools-autolink\n"
 
 #. Plugin Name of the plugin
@@ -88,6 +88,8 @@ msgstr "Déconnexion"
 #: controllers/admin-general.php:27
 msgid "Training videos could not be loaded. Resetting to default content."
 msgstr ""
+"Les vidéos de formation n'ont pas pu être chargées. Restauration du contenu "
+"par défaut."
 
 #: controllers/admin-general.php:31
 msgid "Training Videos"
