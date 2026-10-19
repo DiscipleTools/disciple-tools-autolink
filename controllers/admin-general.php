@@ -11,13 +11,23 @@ class Disciple_Tools_Autolink_Admin_General_Controller extends Disciple_Tools_Au
 	 * @return void
 	 */
 	public function show( $params = [] ): void {
-		$default_training_videos = $this->settings->defaults()['disciple_tools_autolink_training_videos'];
+		$default_training_videos = $this->settings->default_for( 'disciple_tools_autolink_training_videos' );
 		$old                     = [
 			'disciple_tools_autolink_allow_parent_group_selection' => $this->settings->get_option( 'disciple_tools_autolink_allow_parent_group_selection' ),
 			'disciple_tools_autolink_training_videos'              => $this->settings->get_option( 'disciple_tools_autolink_training_videos' ),
 			'disciple_tools_autolink_show_in_menu'                 => $this->settings->get_option( 'disciple_tools_autolink_show_in_menu' ),
 			'disciple_tools_autolink_show_survey'                  => $this->settings->get_option( 'disciple_tools_autolink_show_survey' ),
 			'disciple_tools_autolink_show_training'                => $this->settings->get_option( 'disciple_tools_autolink_show_training' ),
+			'disciple_tools_autolink_contact_link_validity_amount' => $this->settings->get_option( 'disciple_tools_autolink_contact_link_validity_amount' ),
+			'disciple_tools_autolink_contact_link_validity_unit'   => $this->settings->get_option( 'disciple_tools_autolink_contact_link_validity_unit' ),
+		];
+
+		$validity_units = [
+			'hours'                                       => __( 'Hours', 'disciple-tools-autolink' ),
+			'days'                                        => __( 'Days', 'disciple-tools-autolink' ),
+			'weeks'                                       => __( 'Weeks', 'disciple-tools-autolink' ),
+			'months'                                      => __( 'Months', 'disciple-tools-autolink' ),
+			Disciple_Tools_Autolink_Contact_Links::NEVER => __( 'Never expires', 'disciple-tools-autolink' ),
 		];
 		$error                   = $params['error'] ?? null;
 
@@ -91,7 +101,7 @@ class Disciple_Tools_Autolink_Admin_General_Controller extends Disciple_Tools_Au
 	 *
 	 */
 	public function save( $params = [] ): void {
-		if ( ! isset( $_POST['dt_admin_form_nonce'] ) &&
+		if ( ! isset( $_POST['dt_admin_form_nonce'] ) ||
 		     ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['dt_admin_form_nonce'] ) ), 'dt_admin_form' ) ) {
 			return;
 		}
@@ -115,5 +125,12 @@ class Disciple_Tools_Autolink_Admin_General_Controller extends Disciple_Tools_Au
 		update_option( 'disciple_tools_autolink_show_in_menu', ( isset( $post_vars['disciple_tools_autolink_show_in_menu'] ) && $post_vars['disciple_tools_autolink_show_in_menu'] === '1' ) ? "1" : "0" );
 		update_option( 'disciple_tools_autolink_show_survey', ( isset( $post_vars['disciple_tools_autolink_show_survey'] ) && $post_vars['disciple_tools_autolink_show_survey'] === '1' ) ? "1" : "0" );
 		update_option( 'disciple_tools_autolink_show_training', ( isset( $post_vars['disciple_tools_autolink_show_training'] ) && $post_vars['disciple_tools_autolink_show_training'] === '1' ) ? "1" : "0" );
+
+		$validity_unit = $post_vars['disciple_tools_autolink_contact_link_validity_unit'] ?? 'weeks';
+		if ( ! in_array( $validity_unit, array_merge( Disciple_Tools_Autolink_Contact_Links::UNITS, [ Disciple_Tools_Autolink_Contact_Links::NEVER ] ), true ) ) {
+			$validity_unit = 'weeks';
+		}
+		update_option( 'disciple_tools_autolink_contact_link_validity_unit', $validity_unit );
+		update_option( 'disciple_tools_autolink_contact_link_validity_amount', max( 1, absint( $post_vars['disciple_tools_autolink_contact_link_validity_amount'] ?? 1 ) ) );
 	}
 }

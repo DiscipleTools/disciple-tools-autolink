@@ -2,17 +2,18 @@
 
 class Disciple_Tools_Autolink_Language_Controller extends Disciple_Tools_Autolink_Controller {
 	/**
-	 * Switch the current user's locale.
+	 * Switch the actor's locale.
 	 *
 	 * The app is rendered server side and the theme filters `locale` with the
-	 * user's own locale on the front end, so persisting it here is all that is
-	 * needed - the caller reloads to see the new language.
+	 * actor's own locale on the front end, so persisting it here is all that is
+	 * needed - the caller reloads to see the new language. Where it is persisted
+	 * differs by mode: a user carries a locale, a contact does not.
 	 *
 	 * @param WP_REST_Request $request
 	 * @param array $params
-	 * @param int $user_id
+	 * @param Disciple_Tools_Autolink_Actor $actor
 	 */
-	public function update( WP_REST_Request $request, $params, $user_id ) {
+	public function update( WP_REST_Request $request, $params, $actor ) {
 		$body   = $request->get_json_params();
 		$locale = sanitize_text_field( wp_unslash( $body['locale'] ?? '' ) );
 
@@ -26,7 +27,7 @@ class Disciple_Tools_Autolink_Language_Controller extends Disciple_Tools_Autolin
 			wp_send_json_error( [ 'message' => __( 'That language is not available.', 'disciple-tools-autolink' ) ] );
 		}
 
-		$result = Disciple_Tools_Users::update_user_locale( $user_id, $locale );
+		$result = $actor->set_locale( $locale );
 
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( [ 'message' => $result->get_error_message() ] );

@@ -13,11 +13,10 @@ class Disciple_Tools_Autolink_App_Controller extends Disciple_Tools_Autolink_Con
 		$delete_group_nonce = wp_create_nonce( 'dt_autolink_delete_group' );
 		$action             = '';
 		$limit              = 10;
-		$churches           = DT_Posts::list_posts( 'groups', [
-			'assigned_to' => [ get_current_user_id() ],
-			'limit'       => $limit,
-			'sort'        => '-post_date'
-		], false );
+		$churches           = $this->actor()->query_groups( [
+			'limit' => $limit,
+			'sort'  => '-post_date'
+		] );
 
 		//Apply WP formatting to all date fields.
 		$churches['posts'] = array_map( function ( $church ) {
@@ -47,9 +46,16 @@ class Disciple_Tools_Autolink_App_Controller extends Disciple_Tools_Autolink_Con
 		$links             = [
 			'delete_group' => $this->functions->get_app_link() . '?action=delete-group&_wpnonce=' . $delete_group_nonce,
 			'edit_group'   => $this->functions->get_app_link() . '?action=edit-group',
-			'view_group'   => $this->functions->get_app_link() . '?action=group',
 			'create_group' => $this->functions->get_app_link() . '?action=create-group'
 		];
+
+		// The view screen frames the record's own Disciple.Tools page, which needs
+		// a login. Someone holding a magic link has none, so they are not offered
+		// it - the menu simply has one item fewer. An absent link is the signal;
+		// see renderGroup() in churches.js.
+		if ( ! $this->actor()->is_contact() ) {
+			$links['view_group'] = $this->functions->get_app_link() . '?action=group';
+		}
 
 		$error = $params['error'] ?? false;
 

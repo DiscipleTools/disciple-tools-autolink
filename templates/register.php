@@ -16,7 +16,8 @@
                      class="logo__image">
             </div>
 
-            <form action="<?php echo esc_attr( $form_action ) ?>"
+            <form class="app-form"
+                  action="<?php echo esc_attr( $form_action ) ?>"
                   method="POST">
                 <?php wp_nonce_field( 'dt_autolink_register' ); ?>
 
@@ -46,11 +47,11 @@
                          type="password"
                          required></dt-text>
 
-                <dt-button context="success"
+                <submit-button context="success"
                            type="submit"
                            class="button--large button--block">
                     <?php esc_html_e( 'Register', 'disciple-tools-autolink' ) ?>
-                </dt-button>
+                </submit-button>
             </form>
         </div>
     </dt-tile>

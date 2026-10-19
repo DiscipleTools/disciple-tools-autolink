@@ -46,6 +46,27 @@ dt-copy-text {
     --dt-form-padding: 0.53rem 2rem 0.53rem 0.53rem;
 }
 
+/*
+ * Space out a form's fields.
+ *
+ * The web components carry no outer margin of their own - the library did before
+ * the 1.0 update, and forms have been running together since. Only the
+ * components are spaced, so that a plain <label> stays against the input it
+ * belongs to.
+ */
+form.app-form > dt-text,
+form.app-form > dt-textarea,
+form.app-form > dt-number,
+form.app-form > dt-date,
+form.app-form > dt-toggle,
+form.app-form > dt-connection,
+form.app-form > dt-single-select,
+form.app-form > dt-multi-select,
+form.app-form > dt-multi-select-button-group {
+    display: block;
+    margin-block-end: 1rem;
+}
+
 /* Space the group form's fields. The web components are block level but carry no
    outer margin of their own. */
 form.create-group {

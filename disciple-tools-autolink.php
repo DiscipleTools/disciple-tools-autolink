@@ -71,6 +71,8 @@ class Disciple_Tools_Autolink {
 	private static $_instance = null;
 
 	private function __construct() {
+		require_once __DIR__ . '/magic-link/actor.php';
+		require_once __DIR__ . '/magic-link/contact-links.php';
 		require_once __DIR__ . '/magic-link/functions.php';
 		require_once __DIR__ . '/queries.php';
 		require_once __DIR__ . '/controllers/controller.php';
@@ -81,6 +83,8 @@ class Disciple_Tools_Autolink {
 		require_once __DIR__ . '/controllers/genmap.php';
 		require_once __DIR__ . '/controllers/group.php';
 		require_once __DIR__ . '/controllers/tree.php';
+		require_once __DIR__ . '/controllers/contacts.php';
+		require_once __DIR__ . '/controllers/upgrade.php';
 		require_once __DIR__ . '/controllers/field.php';
 		require_once __DIR__ . '/controllers/admin.php';
 		require_once __DIR__ . '/controllers/admin-general.php';
@@ -90,17 +94,26 @@ class Disciple_Tools_Autolink {
 		require_once __DIR__ . '/admin/settings.php';
 
 
-		require_once __DIR__ .
-		             '/magic-link/contact-app.php';
-		require_once __DIR__ .
-		             '/magic-link/user-app.php';
-		require_once __DIR__ .
-		             '/magic-link/login-app.php';
+		// Before the magic links below are built: the theme asks this filter from
+		// inside their constructors.
+		add_filter( 'dt_magic_link_continue', [ 'Disciple_Tools_Autolink_Contact_Links', 'magic_link_continue' ], 20, 2 );
+
+		require_once __DIR__ . '/magic-link/app-routes.php';
+		require_once __DIR__ . '/magic-link/contact-app.php';
+		require_once __DIR__ . '/magic-link/user-app.php';
+		// The contact app shares the user app's routing trait, so it loads after it.
+		require_once __DIR__ . '/magic-link/contact-link-app.php';
+		require_once __DIR__ . '/magic-link/login-app.php';
 
 		if ( is_admin() ) {
 			require_once 'admin/config-required-plugins.php'; // adds required plugins
 			require_once 'admin/admin-menu-and-tabs.php'; // adds starter admin page and section for plugin
 		}
+
+		// Registered for every request, not just this app's own pages: the point is
+		// that the activity log reads as a person on the record's Disciple.Tools
+		// page too.
+		add_filter( 'dt_format_post_activity', [ 'Disciple_Tools_Autolink_Actor', 'name_activity' ], 10, 2 );
 
 		add_filter( 'desktop_navbar_menu_options', [ $this, 'menu_options' ], 999, 1 );
 		add_filter( 'off_canvas_menu_options', [ $this, 'menu_options' ] );

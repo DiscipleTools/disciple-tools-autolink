@@ -13,7 +13,7 @@ class Disciple_Tools_Autolink_Tree_Controller extends Disciple_Tools_Autolink_Co
 	}
 
 	public function show( $params = [] ) {
-		$magic_link = Disciple_Tools_Autolink_Magic_User_App::instance();
+		$magic_link = Disciple_Tools_Autolink_Magic_Functions::app();
 		$data       = $this->global_data();
 		extract( $data );
 		$action       = 'tree';
@@ -41,7 +41,14 @@ class Disciple_Tools_Autolink_Tree_Controller extends Disciple_Tools_Autolink_Co
 		include __DIR__ . '/../templates/tree.php';
 	}
 
-	public function process( WP_REST_Request $request, $params, $user_id ) {
+	/**
+	 * Re-parent a church in the tree.
+	 *
+	 * @param WP_REST_Request $request
+	 * @param array $params
+	 * @param Disciple_Tools_Autolink_Actor $actor
+	 */
+	public function process( WP_REST_Request $request, $params, $actor ) {
 		global $wpdb;
 
 		if ( ! isset( $params['data']['previous_parent'] ) ) {
@@ -51,11 +58,27 @@ class Disciple_Tools_Autolink_Tree_Controller extends Disciple_Tools_Autolink_Co
 			return 'false';
 		}
 
-		$group     = DT_Posts::get_post( 'groups', $params['data']['self'], true, false );
-		$new_group = ( $params['data']['new_parent'] != 'root' ) ? DT_Posts::get_post( 'groups', $params['data']['new_parent'], true, false ) : null;
+		// Both ends of the move have to be in reach. A contact link carries no
+		// capabilities for DT_Posts to check, so the check is made here and
+		// applies to the user link too.
+		if ( ! $actor->can_edit_group( $params['data']['self'] ) ) {
+			return 'reload';
+		}
 
-		if ( ! $new_group
-		     && ( (int) $group["assigned_to"]["id"] !== $user_id ) ) {
+		$group     = DT_Posts::get_post( 'groups', $params['data']['self'], true, false );
+		$new_group = null;
+
+		if ( $params['data']['new_parent'] != 'root' ) {
+			if ( ! $actor->can_edit_group( $params['data']['new_parent'] ) ) {
+				return 'reload';
+			}
+
+			$new_group = DT_Posts::get_post( 'groups', $params['data']['new_parent'], true, false );
+		}
+
+		// Detaching a church to the top of the tree stays reserved for the
+		// churches the person holds themselves, not those of people they coach.
+		if ( ! $new_group && ! $actor->owns_group( $params['data']['self'] ) ) {
 			return "reload";
 		}
 
@@ -96,7 +119,12 @@ class Disciple_Tools_Autolink_Tree_Controller extends Disciple_Tools_Autolink_Co
 		return true;
 	}
 
-	public function data( WP_REST_Request $request, $params, $user_id ) {
+	/**
+	 * @param WP_REST_Request $request
+	 * @param array $params
+	 * @param Disciple_Tools_Autolink_Actor $actor
+	 */
+	public function data( WP_REST_Request $request, $params, $actor ) {
 		echo wp_json_encode( $this->tree_chart->tree() );
 	}
 }

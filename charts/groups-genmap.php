@@ -95,6 +95,11 @@ class Disciple_Tools_Autolink_Genmap extends DT_Genmapper_Metrics_Chart_Base {
 				'nonce'              => wp_create_nonce( 'wp_rest' ),
 				'current_user_login' => wp_get_current_user()->user_login,
 				'current_user_id'    => get_current_user_id(),
+				// The genmap's own endpoint lives outside the magic link
+				// namespace, so the link's parts travel with the request and
+				// identify who is asking. Without them a contact link - which
+				// has no session at all - would read as nobody.
+				'magic_parts'        => Disciple_Tools_Autolink_Magic_Functions::app()->parts,
 				'spinner'            => '<img src="' . trailingslashit( plugin_dir_url( __DIR__ ) ) . 'ajax-loader.gif" style="height:1em;" />',
 				'translation'        => [
 					'string1'            => __( 'Group Generation Tree', 'disciple-tools-genmapper' ),
@@ -104,7 +109,6 @@ class Disciple_Tools_Autolink_Genmap extends DT_Genmapper_Metrics_Chart_Base {
 					'parent_label'       => __( 'Parent', 'disciple-tools-autolink' ),
 					'save_changes_label' => __( 'Save Changes', 'disciple-tools-autolink' ),
 					'cancel_label'       => __( 'Cancel', 'disciple-tools-autolink' ),
-					'open_label'         => __( 'Open Record', 'disciple-tools-autolink' ),
 					'rebase_label'       => __( 'Center on this Node', 'disciple-tools-autolink' ),
 					'ok_label'           => __( 'OK', 'disciple-tools-autolink' ),
 					'edit_record'        => __( 'Edit Record', 'disciple-tools-autolink' ),
@@ -112,9 +116,80 @@ class Disciple_Tools_Autolink_Genmap extends DT_Genmapper_Metrics_Chart_Base {
 					'zoom_in_label'      => __( 'Zoom In', 'disciple-tools-autolink' ),
 					'zoom_out_label'     => __( 'Zoom Out', 'disciple-tools-autolink' ),
 					'open_record_label'  => __( 'Open Record', 'disciple-tools-autolink' ),
+					'error_loading_map'  => __( 'The map could not be loaded. Please try again.', 'disciple-tools-autolink' ),
 				],
 			]
 		);
+	}
+
+	/**
+	 * Work out who is asking.
+	 *
+	 * This route is registered with `__return_true`, so it has always relied on
+	 * the caller's own session to decide what they get back - which returns
+	 * nothing at all for a visitor on a contact link. When the request carries
+	 * magic link parts, the key in them is checked against the record it claims
+	 * and the actor comes from that. Otherwise the logged in user stands, exactly
+	 * as before.
+	 *
+	 * The key is looked up directly rather than through
+	 * DT_Magic_URL::verify_rest_endpoint_permissions_on_post(), which reads the
+	 * link's type out of the request path - and this route's path is
+	 * `dt/v1/autolink/...`, not the link's own `autolink/v1/<type>`, so it never
+	 * matched.
+	 *
+	 * @param WP_REST_Request $request
+	 */
+	private function determine_actor( WP_REST_Request $request ) {
+		$params = $request->get_params();
+
+		if ( empty( $params['parts'] ) || ! is_array( $params['parts'] ) ) {
+			return;
+		}
+
+		$parts      = dt_recursive_sanitize_array( $params['parts'] );
+		$type       = $parts['type'] ?? '';
+		$public_key = $parts['public_key'] ?? '';
+		$post_id    = (int) ( $parts['post_id'] ?? 0 );
+
+		if ( ! in_array( $type, [ 'app', 'contact' ], true ) || ! $public_key || ! $post_id ) {
+			return;
+		}
+
+		$magic    = new DT_Magic_URL( 'autolink' );
+		$meta_key = DT_Magic_URL::get_public_key_meta_key( 'autolink', $type );
+		$owner_id = $type === 'app'
+			? $magic->get_user_id( $meta_key, $public_key )
+			: $magic->get_post_id( $meta_key, $public_key );
+
+		if ( (int) $owner_id !== $post_id ) {
+			return;
+		}
+
+		if ( ! Disciple_Tools_Autolink_Actor::may_act_as( [ 'type' => $type, 'post_id' => $post_id ] ) ) {
+			return;
+		}
+
+		// Honour link expiry the way the app's own endpoints do.
+		if ( class_exists( 'Disciple_Tools_Bulk_Magic_Link_Sender_API' ) ) {
+			$link_args = [
+				'meta_key'    => $meta_key,
+				'public_key'  => $public_key,
+				'post_id'     => $post_id,
+				'post_type'   => $type === 'app' ? 'user' : 'contacts',
+				'instance_id' => null,
+			];
+
+			if ( Disciple_Tools_Bulk_Magic_Link_Sender_API::evaluate_magic_link_continue( true, $link_args ) === false ) {
+				return;
+			}
+		}
+
+		if ( $type === 'app' ) {
+			Disciple_Tools_Autolink_Actor::set_user( $post_id );
+		} else {
+			Disciple_Tools_Autolink_Actor::set_contact( $post_id );
+		}
 	}
 
 	public function add_api_routes() {
@@ -140,9 +215,9 @@ class Disciple_Tools_Autolink_Genmap extends DT_Genmapper_Metrics_Chart_Base {
 
 		$params = $request->get_params();
 
-		$groups    = DT_Posts::list_posts( 'groups', [
-			'assigned_to' => [ get_current_user_id() ],
-		], false );
+		$this->determine_actor( $request );
+
+		$groups    = Disciple_Tools_Autolink_Actor::current()->query_groups( [ 'limit' => 1000 ] );
 		$group_ids = array_map( function ( $group ) {
 			return $group['ID'];
 		}, $groups['posts'] );

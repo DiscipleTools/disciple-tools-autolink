@@ -5,12 +5,15 @@ import "./js/collapse";
 import "./js/church";
 import "./js/church-tile";
 import "./js/lazyReveal";
-import "./js/churchMenu";
+import "./js/card-menu";
 import "./js/church-health-field";
 import "./js/church-counts";
 import "./js/ajax-field";
 import "./js/groups-tree";
 import "./js/churches"
+import "./js/contact-tile";
+import "./js/contacts";
+import "./js/copy-link";
 import "./js/submit-button"
 
 import "@shoelace-style/shoelace/dist/themes/light.css";

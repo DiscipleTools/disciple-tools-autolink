@@ -5,26 +5,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class Disciple_Tools_Autolink_Magic_User_App
+ *
+ * Autolink for someone with a Disciple.Tools login. The link is keyed to their
+ * WP user, and the app runs inside their own session with their own
+ * capabilities.
+ *
+ * @see Disciple_Tools_Autolink_Magic_Contact_Link_App for the same app served to a
+ *      contact who has no login at all.
  */
 class Disciple_Tools_Autolink_Magic_User_App extends DT_Magic_Url_Base {
+	use Disciple_Tools_Autolink_App_Routes;
+
 	private static $_instance = null;
-	public $page_title = 'Autolink';
-	public $page_description = 'Autolink user app';
+	// Named for the Apps tile and the user's own app list, where Autolink's
+	// links sit side by side. The browser tab still reads "Autolink" - see
+	// page_tab_title().
+	public $page_title = 'Autolink - User App';
+	public $page_description = 'The Autolink app for someone with a Disciple.Tools login. Opening it asks them to sign in.';
 	public $root = "autolink";
 	public $type = 'app';
 	public $post_type = 'user';
 	public $show_bulk_send = false;
 	public $show_app_tile = false;
-	public $functions;
-	public $survey_controller;
-	public $app_controller;
-	public $genmap_controller;
-	public $group_controller;
-	public $tree_controller;
-	public $login_controller;
-	public $field_controller;
-	public $training_controller;
-	public $language_controller;
 	public $meta = [];
 	private $meta_key = 'autolink-app'; // Allows for instance specific data.
 
@@ -57,31 +59,8 @@ class Disciple_Tools_Autolink_Magic_User_App extends DT_Magic_Url_Base {
 
 		parent::__construct();
 
-
-		$this->functions           = Disciple_Tools_Autolink_Magic_Functions::instance();
-		$this->survey_controller   = new Disciple_Tools_Autolink_Survey_Controller();
-		$this->app_controller      = new Disciple_Tools_Autolink_App_Controller();
-		$this->genmap_controller   = new Disciple_Tools_Autolink_Genmap_Controller();
-		$this->group_controller    = new Disciple_Tools_Autolink_Group_Controller();
-		$this->tree_controller     = new Disciple_Tools_Autolink_Tree_Controller();
-		$this->login_controller    = new Disciple_Tools_Autolink_Login_Controller();
-		$this->field_controller    = new Disciple_Tools_Autolink_Field_Controller();
-		$this->training_controller = new Disciple_Tools_Autolink_Training_Controller();
-		$this->language_controller = new Disciple_Tools_Autolink_Language_Controller();
-		//Genmapper isn't loaded on every request
-		$this->functions->init_genmapper();
-
-		$action = sanitize_key( wp_unslash( $_GET['action'] ?? '' ) );
-		// Genmapper is an optional dependency. `&&` binds tighter than `||`, so the
-		// class_exists() check used to apply only to the genmap screen and every REST
-		// request loaded the chart - which fatals on a site without the plugin.
-		if ( ( dt_is_rest() || $action === 'genmap' ) && class_exists( 'DT_Genmapper_Metrics' ) ) {
-			require_once __DIR__ . "/../charts/groups-genmap.php";
-
-			if ( class_exists( 'Disciple_Tools_Autolink_Genmap' ) ) {
-				new Disciple_Tools_Autolink_Genmap();
-			}
-		}
+		$this->init_app();
+		$this->maybe_load_genmap();
 
 		/**
 		 * user_app and module section
@@ -115,6 +94,8 @@ class Disciple_Tools_Autolink_Magic_User_App extends DT_Magic_Url_Base {
 
 		// load if valid url
 		wp_set_current_user( $this->parts['post_id'] );
+		Disciple_Tools_Autolink_Actor::set_user( $this->parts['post_id'] );
+		Disciple_Tools_Autolink_Magic_Functions::set_app( $this );
 		add_filter( 'user_has_cap', [ $this, 'user_has_cap' ], 100, 3 );
 		add_action( 'dt_blank_body', function () {
 			$this->ready();
@@ -135,86 +116,25 @@ class Disciple_Tools_Autolink_Magic_User_App extends DT_Magic_Url_Base {
 
 	public function ready() {
 		wp_set_current_user( $this->parts['post_id'] );
+		Disciple_Tools_Autolink_Actor::set_user( $this->parts['post_id'] );
+		Disciple_Tools_Autolink_Magic_Functions::set_app( $this );
 		$this->functions->add_session_leader();
 	}
 
 	/**
-	 * Map routes to controllers
+	 * The actor a verified REST call is acting as.
+	 *
+	 * For a user link the magic key resolves to the user id itself, so the
+	 * verified parts identify the actor without trusting the session.
+	 *
+	 * @param array $parts
+	 *
+	 * @return Disciple_Tools_Autolink_Actor
 	 */
-	public function routes() {
-		$action = sanitize_key( wp_unslash( $_GET['action'] ?? '' ) );
-		$type   = strtoupper( sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) );
+	public function rest_actor( $parts ) {
+		Disciple_Tools_Autolink_Magic_Functions::set_app( $this );
 
-		if ( $type === 'GET' ) {
-			switch ( $action ) {
-				case 'survey':
-					$this->survey_controller->show();
-					break;
-				case 'edit-group':
-					$this->group_controller->edit();
-					break;
-				case 'create-group':
-					$this->group_controller->create();
-					break;
-				case 'delete-group':
-					$this->group_controller->delete();
-					break;
-				case 'genmap':
-					$this->genmap_controller->show();
-					break;
-				case 'tree':
-					$this->tree_controller->show();
-					break;
-				case 'logout':
-					$this->login_controller->logout();
-					break;
-				case 'training':
-					// The controller redirects back to the app when training is disabled.
-					$this->training_controller->show();
-					break;
-				case 'group':
-					$this->group_controller->show();
-					break;
-				default:
-					if ( ! $this->functions->survey_completed() && $this->functions->survey_enabled() ) {
-						return wp_redirect( $this->functions->get_app_link() . '?action=survey' );
-					}
-					$this->app_controller->show();
-					break;
-			}
-
-			return;
-		}
-
-		if ( $type === 'POST' ) {
-			switch ( $action ) {
-				case 'survey':
-					$this->survey_controller->process();
-					break;
-				case "create-group":
-					$this->group_controller->store();
-					break;
-				case 'edit-group':
-					$this->group_controller->update();
-					break;
-				default:
-					wp_redirect( '/' . $this->root );
-			}
-
-			return;
-		}
-	}
-
-	public function wp_enqueue_scripts() {
-		$this->functions->wp_enqueue_scripts();
-		wp_localize_script(
-			'magic_link_scripts',
-			'magic',
-			[
-				'parts'          => $this->parts,
-				'rest_namespace' => $this->root . '/v1/' . $this->type,
-			]
-		);
+		return Disciple_Tools_Autolink_Actor::set_user( (int) ( $parts['post_id'] ?? get_current_user_id() ) );
 	}
 
 	/**
@@ -248,89 +168,6 @@ class Disciple_Tools_Autolink_Magic_User_App extends DT_Magic_Url_Base {
 	 */
 	public function header_style() {
 		DT_Mapbox_API::mapbox_search_widget_css();
-	}
-
-	/**
-	 * Register REST Endpoints
-	 * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
-	 */
-	public function add_endpoints() {
-		$namespace = $this->root . '/v1';
-		register_rest_route(
-			$namespace,
-			'/' . $this->type,
-			[
-				[
-					'methods'             => "GET",
-					'callback'            => [ $this, 'endpoint_get' ],
-					'permission_callback' => function ( WP_REST_Request $request ) {
-						$magic = new DT_Magic_URL( $this->root );
-
-						return $magic->verify_rest_endpoint_permissions_on_post( $request );
-					},
-				],
-			]
-		);
-		register_rest_route(
-			$namespace,
-			'/' . $this->type,
-			[
-				[
-					'methods'             => "POST",
-					'callback'            => [ $this, 'endpoint_post' ],
-					'permission_callback' => function ( WP_REST_Request $request ) {
-						$magic = new DT_Magic_URL( $this->root );
-
-						return $magic->verify_rest_endpoint_permissions_on_post( $request );
-					},
-				],
-			]
-		);
-	}
-
-	public function endpoint_post( WP_REST_Request $request ) {
-		$params  = $request->get_params();
-		$params  = dt_recursive_sanitize_array( $params );
-		$user_id = get_current_user_id();
-
-		if ( ! isset( $params['parts'], $params['action'] ) ) {
-			return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
-		}
-
-		switch ( $params['action'] ) {
-			case 'tree':
-				return $this->tree_controller->data( $request, $params, $user_id );
-			case 'onItemDrop':
-				return $this->tree_controller->process( $request, $params, $user_id );
-			case 'update_field':
-				return $this->field_controller->update( $request, $params, $user_id );
-			case 'switch_language':
-				return $this->language_controller->update( $request, $params, $user_id );
-			default:
-				return new WP_Error( __METHOD__, "Invalid action", [ 'status' => 400 ] );
-		}
-	}
-
-	/**
-	 * Route REST endpointS by action
-	 *
-	 * @param WP_REST_Request $request
-	 */
-	public function endpoint_get( WP_REST_Request $request ) {
-		$params = $request->get_params();
-		if ( ! isset( $params['parts'], $params['action'] ) ) {
-			return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
-		}
-
-		switch ( $params['action'] ) {
-			case "parent_group_field":
-				return $this->group_controller->parent_group_field();
-				break;
-			case "groups":
-				return $this->group_controller->index();
-			default:
-				return new WP_Error( __METHOD__, "Invalid action", [ 'status' => 400 ] );
-		}
 	}
 
 	/**

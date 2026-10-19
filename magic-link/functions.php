@@ -4,6 +4,32 @@ class Disciple_Tools_Autolink_Magic_Functions {
 
 	private static $_instance = null;
 
+	/**
+	 * The magic link class serving this request.
+	 *
+	 * Controllers need the link's `parts` to build their own REST urls, and
+	 * which link that is now depends on whether a user or a contact is using the
+	 * app. Before contact links existed this was simply hardcoded to the user app.
+	 *
+	 * @var DT_Magic_Url_Base|null
+	 */
+	private static $app = null;
+
+	public static function set_app( $app ) {
+		self::$app = $app;
+	}
+
+	/**
+	 * @return DT_Magic_Url_Base
+	 */
+	public static function app() {
+		if ( self::$app === null ) {
+			self::$app = Disciple_Tools_Autolink_Magic_User_App::instance();
+		}
+
+		return self::$app;
+	}
+
 	public function dt_magic_url_base_allowed_js( $allowed_js ) {
 		// The theme's web component library. Autolink's components extend it,
 		// so it has to survive the magic link script allow list.
@@ -49,6 +75,7 @@ class Disciple_Tools_Autolink_Magic_Functions {
 		$plugin_path  = WP_PLUGIN_DIR . '/disciple-tools-autolink';
 		$post_type    = get_post_type_object( 'groups' );
 		$group_labels = get_post_type_labels( $post_type );
+		$actor        = Disciple_Tools_Autolink_Actor::current();
 
 		// `web-components` is a dependency so the theme's library is defined
 		// before our components try to extend it.
@@ -56,7 +83,11 @@ class Disciple_Tools_Autolink_Magic_Functions {
 			'jquery',
 			'lodash',
 			'web-components',
-		], filemtime( plugin_dir_path( __FILE__ ) . 'magic-link.js' ), true );
+			// Versioned by the built bundle, not by the entry source file. Editing
+			// any other module rebuilds dist/ without touching magic-link.js, so
+			// keying off the source left browsers holding a stale bundle - new
+			// markup from PHP against old behaviour from JavaScript.
+		], filemtime( $plugin_path . '/dist/magic-link.js' ), true );
 
 		wp_enqueue_script( 'lodash' );
 
@@ -69,6 +100,8 @@ class Disciple_Tools_Autolink_Magic_Functions {
 				'nonce'         => wp_create_nonce( 'wp_rest' ),
 				'show_training' => $this->training_enabled(),
 				'show_survey'   => $this->survey_enabled(),
+				'show_logout'   => $actor->can_logout(),
+				'is_contact'    => $actor->is_contact(),
 				'languages'     => $this->available_languages(),
 				'urls'         => [
 					'root'           => esc_url_raw( trailingslashit( site_url() ) ),
@@ -77,7 +110,8 @@ class Disciple_Tools_Autolink_Magic_Functions {
 					'app'            => esc_url_raw( trailingslashit( $this->get_app_link() ) ),
 					'link'           => esc_url_raw( trailingslashit( $this->get_link_url() ) ),
 					'survey'         => esc_url_raw( $this->get_app_link() . '?action=survey' ),
-					'logout'         => $this->get_app_link() . '?action=logout',
+					// A contact link has no session, so there is nothing to log out of.
+					'logout'         => $actor->can_logout() ? $this->get_app_link() . '?action=logout' : '',
 					'reset_password' => wp_lostpassword_url( $this->get_link_url() ),
 					'training'       => esc_url_raw( $this->get_training_url() )
 				],
@@ -93,6 +127,7 @@ class Disciple_Tools_Autolink_Magic_Functions {
 					'user_greeting,'     => __( 'Hello,', 'disciple-tools-autolink' ),
 					'coached_by'         => __( 'Coached by', 'disciple-tools-autolink' ),
 					'my_link'            => __( 'My Link', 'disciple-tools-autolink' ),
+					'coaching_links'     => __( 'Links for those you coach', 'disciple-tools-autolink' ),
 					/* translators: %s: plural name of the group post type, e.g. "Churches". */
 					'my_churches'        => sprintf( __( 'My %s', 'disciple-tools-autolink' ), $group_labels->name ),
 					'close'              => __( 'Close', 'disciple-tools-autolink' ),
@@ -108,9 +143,7 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	 * @return string
 	 */
 	public function get_app_link() {
-		$app_public_key = get_user_option( DT_Magic_URL::get_public_key_meta_key( 'autolink', 'app' ) );
-
-		return DT_Magic_URL::get_link_url( 'autolink', 'app', $app_public_key );
+		return Disciple_Tools_Autolink_Actor::current()->app_link();
 	}
 
 	/**
@@ -147,11 +180,9 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	 * @return array
 	 */
 	public function available_languages( $user_id = null ) {
-		if ( $user_id === null ) {
-			$user_id = get_current_user_id();
-		}
-
-		$user_locale = get_user_locale( $user_id );
+		$user_locale = $user_id === null
+			? Disciple_Tools_Autolink_Actor::current()->locale()
+			: get_user_locale( $user_id );
 		$languages   = [];
 
 		foreach ( dt_get_available_languages() as $language ) {
@@ -285,8 +316,13 @@ class Disciple_Tools_Autolink_Magic_Functions {
 
 	public function survey_completed() {
 		$survey     = $this->survey();
-		$contact_id = Disciple_Tools_Users::get_contact_for_user( get_current_user_id(), true );
-		$post_meta  = get_post_meta( $contact_id );
+		$contact_id = Disciple_Tools_Autolink_Actor::current()->contact_id();
+
+		if ( ! $contact_id ) {
+			return true;
+		}
+
+		$post_meta = get_post_meta( $contact_id );
 		foreach ( $survey as $question ) {
 			if ( ! isset( $post_meta[ $question['name'] ] ) ) {
 				return false;
@@ -395,19 +431,23 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	 * @return string
 	 */
 	public function get_share_link() {
-		$current_user_id = get_current_user_id();
-		$record          = DT_Posts::get_post( 'contacts', Disciple_Tools_Users::get_contact_for_user( $current_user_id ), true, false );
-		$meta_key        = 'autolink_share_magic_key';
-		if ( isset( $record[ $meta_key ] ) ) {
-			$key = $record[ $meta_key ];
-		} else {
-			$key = dt_create_unique_key();
-			update_post_meta( get_the_ID(), $meta_key, $key );
+		$actor      = Disciple_Tools_Autolink_Actor::current();
+		$contact_id = $actor->contact_id();
+
+		if ( ! $contact_id ) {
+			return '';
+		}
+
+		// A contact with no login has nothing to invite people into: the share
+		// link sends them to register a Disciple.Tools account. Hand them their
+		// own app link instead, so they can get back to it on another device.
+		if ( $actor->is_contact() ) {
+			return $actor->app_link();
 		}
 
 		return DT_Magic_URL::get_link_url_for_post(
 			'contacts',
-			$record['ID'],
+			$contact_id,
 			'autolink',
 			'share'
 		);
@@ -432,7 +472,7 @@ class Disciple_Tools_Autolink_Magic_Functions {
 		$contacts = DT_Posts::list_posts( 'contacts', [
 			'coached_by' => [ (int) $contact_id ],
 			"limit"      => 1000,
-		] )['posts'];
+		], false )['posts'];
 
 		foreach ( $contacts as $contact ) {
 			//Check against infinite loop

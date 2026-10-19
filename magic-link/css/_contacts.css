@@ -1,0 +1,307 @@
+.contacts {
+    position: relative;
+    display: block;
+}
+
+/* Matches .churches__heading, so both tabs put the add button in the same place. */
+.contacts__heading {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contacts__heading h3 {
+    color: var(--dt-tile-header-color, #3f729b);
+    font-size: 1.5rem;
+    text-transform: var(--dt-tile-header-text-transform, capitalize);
+    font-weight: 700;
+    margin: 0;
+}
+
+.contacts .help-text {
+    display: block;
+    /* Clears the round add button sitting at the end of the heading row. */
+    margin: 0.6rem 0 0.25rem;
+    /* Reads from the same edge as the heading it explains. */
+    text-align: start;
+}
+
+/*
+ * The add form. Shaped like the create-group form rather than like the list it
+ * came from: a centred title and nothing else above it, so the page is the one
+ * thing it is asking for.
+ */
+.contact-form {
+    /* "Add a disciple" is a sentence, and capitalize would title-case it. */
+    --dt-tile-header-text-transform: none;
+}
+
+.contact-form .help-text {
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.contacts__empty {
+    color: var(--gray-0);
+}
+
+dt-button.contacts__add {
+    --dt-button-font-size: 1.7rem;
+    --dt-button-height: 30px;
+    --dt-button-width: 30px;
+}
+
+dt-button.contacts__add dt-icon {
+    display: flex;
+}
+
+.contact-form__actions,
+.upgrade__actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.upgrade__heading h3 {
+    color: var(--dt-tile-header-color, #3f729b);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.upgrade__keeps {
+    margin: 0.75rem 0;
+}
+
+.upgrade__notice {
+    color: var(--gray-0);
+    font-size: 0.85rem;
+    margin-top: 1rem;
+}
+
+.upgrade__label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.upgrade__input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    border: 1px solid var(--dt-form-border-color, #e4e4e4);
+    border-radius: 4px;
+    background: var(--dt-form-background-color, #fff);
+    color: var(--dt-form-text-color, #0a0a0a);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* A contact's own link: when it runs out, and the way off it. */
+.link__expiry {
+    margin: 0.75rem 0 0.5rem;
+    font-size: 0.875rem;
+    /* The tile sets everything bold; only the date should stand out. */
+    font-weight: normal;
+}
+
+.link__expiry strong {
+    font-weight: 700;
+}
+
+.link__expiry--soon {
+    padding: 0.5rem 0.75rem;
+    border-inline-start: 3px solid var(--warning-color, #ffae00);
+    background: var(--warning-background-color, #fff8e5);
+}
+
+dt-tile.app__link dt-button.link__upgrade {
+    display: inline-block;
+}
+
+/* The cards. Mirrors .churches__groups so both tabs stack the same way. */
+.contacts__list {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.contact {
+    position: relative;
+    display: block;
+}
+
+/* Slotted into the card heading, beside the name. */
+.contact__login {
+    display: inline-flex;
+    align-items: center;
+    color: var(--gray-0, #666);
+    font-size: 1.1rem;
+}
+
+.contact__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0 0 0.5rem;
+}
+
+.contact__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+    background: var(--primary-color-light-0, #ecf5fc);
+    color: var(--primary-color, #2c5364);
+}
+
+/* Direct relationships read stronger than the ones that come via a church. */
+.contact__badge--coaching,
+.contact__badge--assigned {
+    background: var(--primary-color-light-1, #c2e0ff);
+}
+
+/* Field icons arrive as images; a customised field may give a font icon instead. */
+.contact__badge-icon {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    font-size: 0.95rem;
+    display: flex;
+}
+
+/* The churches a badge came from, named rather than hidden behind a tooltip. */
+.contact__churches {
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+}
+
+.contact__church {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--gray-0, #666);
+    text-align: start;
+}
+
+/*
+ * Faith milestones. Every milestone the field defines is on the card; reaching
+ * one lights it, and the rest sit dim behind it, so the row reads as progress
+ * rather than as a list of achievements.
+ *
+ * Icons arrive either as images or as font icons, so the dimming has to work on
+ * both: opacity alone would leave a colour image still reading as coloured, and
+ * grayscale alone would leave a dark glyph still reading as present.
+ */
+.contact__milestones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+}
+
+.contact__milestone {
+    display: inline-flex;
+}
+
+/*
+ * A button where the browser can open the label, a span where it cannot.
+ * The dimming lives here rather than on the list item so that it never reaches
+ * the label, which is a sibling.
+ */
+.contact__milestone-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+}
+
+button.contact__milestone-mark {
+    cursor: pointer;
+}
+
+.contact__milestone-mark:focus-visible {
+    outline: 2px solid var(--primary-color, #3f729b);
+    outline-offset: 2px;
+}
+
+.contact__milestone-mark--on {
+    background: var(--primary-color-light-1, #c2e0ff);
+}
+
+.contact__milestone-mark--off {
+    background: var(--dt-form-background-color, #f6f6f6);
+    opacity: 0.35;
+    filter: grayscale(1);
+}
+
+/*
+ * The label, shown on touch. Placed from JS - see placeTip() - because CSS
+ * anchor positioning is not yet carried widely enough to rest on.
+ */
+.contact__milestone-tip {
+    position: fixed;
+    /* The user agent centres a popover with inset:0 and margin:auto. */
+    inset: auto;
+    margin: 0;
+    max-width: min(16rem, calc(100vw - 2rem));
+    padding: 0.35rem 0.6rem;
+    border: 0;
+    border-radius: 4px;
+    background: var(--dt-tile-header-color, #3f729b);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.4;
+    /* Transparent until placed, so the frame it spends at the user agent's
+       default position in the middle of the screen is never seen. */
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.contact__milestone-tip.is-placed {
+    opacity: 1;
+}
+
+.contact__milestone-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    font-size: 1.15rem;
+    display: flex;
+}
+
+.contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.contact__link-status {
+    font-size: 0.8125rem;
+    color: var(--gray-1, #5a5a5a);
+}
+
+.contact__link-status--expired {
+    color: var(--alert-color, #cc4b37);
+    font-weight: 600;
+}

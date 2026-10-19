@@ -299,14 +299,18 @@ export class AppMenu extends DtBase {
                             `
                             : nothing}
                     ${this.renderLanguages()}
-                    <li class="menu__item">
-                        <a
-                                href="${app.urls.logout}"
-                                class="menu__link menu__link--logout"
-                                title="${app.translations.logout_nav_label}"
-                        >${app.translations.logout_nav_label}</a
-                        >
-                    </li>
+                    ${app.show_logout
+                            ? html`
+                                <li class="menu__item">
+                                    <a
+                                            href="${app.urls.logout}"
+                                            class="menu__link menu__link--logout"
+                                            title="${app.translations.logout_nav_label}"
+                                    >${app.translations.logout_nav_label}</a
+                                    >
+                                </li>
+                            `
+                            : nothing}
                 </ul>
             </div>
         `;

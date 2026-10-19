@@ -10,15 +10,23 @@ class Disciple_Tools_Autolink_Settings {
 	 * @return void
 	 */
 	protected function setup_options(): void {
-		foreach ( $this->defaults() as $key => $value ) {
+		foreach ( array_keys( $this->defaults() ) as $key ) {
 			if ( get_option( $key, 'MIA' ) === 'MIA' ) {
-				add_option( $key, $value );
+				add_option( $key, $this->default_for( $key ) );
 			}
 		}
 	}
 
 	/**
 	 * Return a map of the fields and their default values
+	 *
+	 * A default that costs something to build is given as a callable rather than
+	 * a value, and nothing here resolves one - see default_for(). This runs on
+	 * every request, from the constructor, only to find out which options are
+	 * missing; building the training video list eagerly meant calling __() while
+	 * the plugin was still loading, which pins the whole catalogue to the site's
+	 * locale before a magic link has had the chance to choose its own.
+	 *
 	 * @return array
 	 */
 	public function defaults(): array {
@@ -27,8 +35,27 @@ class Disciple_Tools_Autolink_Settings {
 			'disciple_tools_autolink_show_in_menu'                 => true,
 			'disciple_tools_autolink_show_survey'                  => true,
 			'disciple_tools_autolink_show_training'                => true,
-			'disciple_tools_autolink_training_videos'              => json_encode( $this->localized_training_videos() )
+			// How long a contact link lasts from when it is copied. See
+			// Disciple_Tools_Autolink_Contact_Links.
+			'disciple_tools_autolink_contact_link_validity_amount' => 1,
+			'disciple_tools_autolink_contact_link_validity_unit'   => 'weeks',
+			'disciple_tools_autolink_training_videos'              => function () {
+				return json_encode( $this->localized_training_videos() );
+			}
 		];
+	}
+
+	/**
+	 * One field's default value, built now if it has to be.
+	 *
+	 * @param string $name
+	 *
+	 * @return mixed false where there is no such field
+	 */
+	public function default_for( string $name ) {
+		$default = $this->defaults()[ $name ] ?? false;
+
+		return $default instanceof Closure ? $default() : $default;
 	}
 
 	/**
@@ -148,6 +175,11 @@ class Disciple_Tools_Autolink_Settings {
 	 * @return false|mixed
 	 */
 	public function get_option( $name ) {
-		return get_option( $name, $this->defaults()[ $name ] );
+		// Asked for separately rather than passed to get_option() as its default,
+		// because an argument is built whether or not it ends up being used, and
+		// some of these defaults are not free - see defaults().
+		$value = get_option( $name, 'MIA' );
+
+		return $value === 'MIA' ? $this->default_for( $name ) : $value;
 	}
 }

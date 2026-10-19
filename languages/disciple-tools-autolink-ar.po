@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Disciple.Tools - Autolink 1.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disciple-tools-"
 "autolink\n"
-"POT-Creation-Date: 2026-09-25T08:46:16+00:00\n"
+"POT-Creation-Date: 2026-10-08T12:26:30+00:00\n"
 "PO-Revision-Date: 2026-09-25 11:47+0000\n"
 "Last-Translator: Jon W <translator@disciple.tools>\n"
 "Language-Team: Arabic <https://translate.disciple.tools/projects/disciple-"
@@ -19,27 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 
-#. Plugin Name of the plugin
-#: disciple-tools-autolink.php
-msgid "Disciple.Tools - Autolink"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: disciple-tools-autolink.php
-msgid "https://github.com/DiscipleTools/disciple-tools-autolink"
-msgstr ""
-
-#. Description of the plugin
-#: disciple-tools-autolink.php
-#, fuzzy
-msgid ""
-"Provides a simplified interface for managing and visualizing your Disciple."
-"Tools network. Share access with your downstream leaders to easily build "
-"your group tree."
-msgstr ""
-"توفّر واجهة مبسّطة لإدارة شبكة Disciple.Tools الخاصة بك وعرضها بصريًا. شارك "
-"الوصول مع القادة التابعين لك لبناء شجرة مجموعاتك بسهولة."
-
 #. Author URI of the plugin
 #: disciple-tools-autolink.php
 msgid "https://www.eastwest.org/"
@@ -48,232 +27,309 @@ msgstr ""
 # Standalone label in the genmap chart (the parent node of the selected one),
 # not glued to a post-type label - see "Parent %s" for that one. The theme
 # translates the phrase "Parent Group" as "المجموعة الأصلية".
-#: charts/groups-genmap.php:104
-#, fuzzy
+#: charts/groups-genmap.php:109
 msgid "Parent"
 msgstr "الأصلية"
 
-#: charts/groups-genmap.php:105
-#, fuzzy
+#: charts/groups-genmap.php:110
 msgid "Save Changes"
 msgstr "حفظ التغييرات"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: charts/groups-genmap.php:106 controllers/group.php:62
-#, fuzzy
+#: charts/groups-genmap.php:111 controllers/contacts.php:73
+#: controllers/group.php:67
 msgid "Cancel"
 msgstr "إلغاء"
 
-#: charts/groups-genmap.php:107 charts/groups-genmap.php:114
-#, fuzzy
+#: charts/groups-genmap.php:112 charts/groups-genmap.php:119
 msgid "Open Record"
 msgstr "فتح السجل"
 
-#: charts/groups-genmap.php:108
-#, fuzzy
+#: charts/groups-genmap.php:113
 msgid "Center on this Node"
 msgstr "توسيط هذه العقدة"
 
-#: charts/groups-genmap.php:109
-#, fuzzy
+#: charts/groups-genmap.php:114
 msgid "OK"
 msgstr "نعم"
 
-#: charts/groups-genmap.php:110
-#, fuzzy
+#: charts/groups-genmap.php:115
 msgid "Edit Record"
 msgstr "تحرير السجل"
 
-#: charts/groups-genmap.php:111 controllers/admin-general.php:34
-#, fuzzy
+#: charts/groups-genmap.php:116 controllers/admin-general.php:34
 msgid "Reset"
 msgstr "إعادة تعيين"
 
-#: charts/groups-genmap.php:112
-#, fuzzy
+#: charts/groups-genmap.php:117
 msgid "Zoom In"
 msgstr "تكبير"
 
-#: charts/groups-genmap.php:113
-#, fuzzy
+#: charts/groups-genmap.php:118
 msgid "Zoom Out"
 msgstr "تصغير"
 
+#: charts/groups-genmap.php:120
+msgid "The map could not be loaded. Please try again."
+msgstr "تعذّر تحميل الخريطة. يرجى المحاولة مرة أخرى."
+
 #: controllers/admin-general.php:27
-#, fuzzy
 msgid "Training videos could not be loaded. Resetting to default content."
 msgstr ""
 "تعذّر تحميل فيديوهات التدريب. تتم الآن إعادة التعيين إلى المحتوى الافتراضي."
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
 #: controllers/admin-general.php:31
-#, fuzzy
 msgid "Training Videos"
 msgstr "فيديوهات التدريب"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
 #: controllers/admin-general.php:32
-#, fuzzy
 msgid "Title"
 msgstr "العنوان"
 
 #: controllers/admin-general.php:33
-#, fuzzy
 msgid "Embed"
 msgstr "كود التضمين"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: controllers/admin-general.php:35
-#, fuzzy
+#: controllers/admin-general.php:35 controllers/contacts.php:72
 msgid "Add"
 msgstr "إضافة"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
 #: controllers/admin-general.php:36
-#, fuzzy
 msgid "Remove"
 msgstr "إزالة"
 
 #: controllers/admin-general.php:37
-#, fuzzy
 msgid "Are you sure you want to reset the training videos to default content?"
 msgstr ""
 "هل أنت متأكد أنك تريد إعادة تعيين فيديوهات التدريب إلى المحتوى الافتراضي؟"
 
 #: controllers/admin-general.php:38
-#, fuzzy
 msgid "Are you sure you want to remove this video?"
 msgstr "هل أنت متأكد أنك تريد إزالة هذا الفيديو؟"
 
 #: controllers/admin-general.php:39
-#, fuzzy
 msgid "Up"
 msgstr "أعلى"
 
 #: controllers/admin-general.php:40
-#, fuzzy
 msgid "Down"
 msgstr "أسفل"
 
 #: controllers/admin-general.php:109
-#, fuzzy
 msgid "Invalid training videos."
 msgstr "فيديوهات تدريب غير صالحة."
 
 # Arabic normally forms "my X" with a possessive suffix ("كنائسي"), which is
 # impossible with a placeholder, so this uses the analytic form instead.
 #. translators: %s: plural name of the group post type, e.g. "Churches".
-#: controllers/app.php:35 controllers/controller.php:29
-#: magic-link/functions.php:97 magic-link/functions.php:335
+#: controllers/app.php:34 controllers/controller.php:44
+#: magic-link/functions.php:128 magic-link/functions.php:367
 #, php-format
 msgid "My %s"
 msgstr "%s الخاصة بي"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: controllers/app.php:36
-#, fuzzy
+#: controllers/app.php:35
 msgid "Church Start Date"
 msgstr "تاريخ إنشاء الكنيسة"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:38 controllers/controller.php:38
-#: magic-link/functions.php:343
-#, fuzzy, php-format
+#: controllers/app.php:37 controllers/controller.php:56
+#: magic-link/functions.php:375
+#, php-format
 msgid "View %s"
 msgstr "عرض %s"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:40
-#, fuzzy, php-format
+#: controllers/app.php:39
+#, php-format
 msgid "Delete %s"
 msgstr "حذف %s"
 
 #. translators: %s: lowercased singular name of the group post type, e.g. "church".
-#: controllers/app.php:42
-#, fuzzy, php-format
+#: controllers/app.php:41
+#, php-format
 msgid "Are you sure you want to delete this %s?"
 msgstr "هل أنت متأكد أنك تريد حذف %s؟"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:44 controllers/group.php:50
-#, fuzzy, php-format
+#: controllers/app.php:43 controllers/group.php:55
+#, php-format
 msgid "Edit %s"
 msgstr "تحرير %s"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: controllers/app.php:45
-#, fuzzy
+#: controllers/app.php:44
 msgid "More"
 msgstr "المزيد"
 
-#: controllers/controller.php:22 magic-link/functions.php:93
-#: magic-link/functions.php:328
-#, fuzzy
+#. translators: %s: lowercased plural name of the group post type, e.g. "churches".
+#: controllers/contacts.php:27
+#, php-format
+msgid ""
+"The people you coach or are assigned, and the leaders and members of your %s."
+msgstr "الأشخاص الذين تدرّبهم أو المعيّنون لك، وقادة وأعضاء %s الخاصة بك."
+
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/contacts.php:29
+#, php-format
+msgid "Add %s"
+msgstr "إضافة %s"
+
+#: controllers/contacts.php:32
+msgid "Has a Disciple.Tools login"
+msgstr "لديه حساب على Disciple.Tools"
+
+#: controllers/contacts.php:33
+msgid "Copy link"
+msgstr "نسخ الرابط"
+
+#: controllers/contacts.php:34
+msgid "Copied"
+msgstr "تم النسخ"
+
+#: controllers/contacts.php:41
+#, php-format
+msgid ""
+"No %1$s yet. People you coach, and the leaders and members of your %2$s, "
+"will appear here."
+msgstr ""
+"لا توجد %1$s بعد. سيظهر هنا الأشخاص الذين تدرّبهم وقادة وأعضاء %2$s الخاصة بك."
+
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/contacts.php:69
+#, php-format
+msgid "Add a %s"
+msgstr "إضافة %s"
+
+#: controllers/contacts.php:70
+msgid ""
+"They will be added to the people you coach, and get their own link into this "
+"app."
+msgstr ""
+"ستتم إضافتهم إلى الأشخاص الذين تدرّبهم، وسيحصلون على رابط خاص بهم لهذا "
+"التطبيق."
+
+#: controllers/contacts.php:71
+msgid "Name"
+msgstr "الاسم"
+
+#: controllers/contacts.php:94 controllers/upgrade.php:95
+msgid "Unable to verify request. Please try again."
+msgstr "تعذّر التحقق من الطلب. يرجى المحاولة مرة أخرى."
+
+#: controllers/contacts.php:100
+msgid "Please enter a name."
+msgstr "يرجى إدخال الاسم."
+
+#: controllers/contacts.php:106
+msgid "Your record could not be found."
+msgstr "تعذّر العثور على سجلك."
+
+#: controllers/contacts.php:305
+msgid "Coaching"
+msgstr "تحت تدريبك"
+
+#: controllers/contacts.php:306
+msgid "Assigned"
+msgstr "معيّن لك"
+
+#: controllers/contacts.php:307
+msgid "Leader"
+msgstr "قائد"
+
+#: controllers/contacts.php:308
+msgid "Member"
+msgstr "عضو"
+
+#. translators: %s: a list of church names.
+#: controllers/contacts.php:313
+#, php-format
+msgid "Leads %s"
+msgstr "يقود %s"
+
+#. translators: %s: a list of church names.
+#: controllers/contacts.php:315
+#, php-format
+msgid "Member of %s"
+msgstr "عضو في %s"
+
+#: controllers/controller.php:35 magic-link/functions.php:123
+#: magic-link/functions.php:360
 msgid "Hello,"
 msgstr "مرحبًا،"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: controllers/controller.php:25 magic-link/functions.php:94
-#: magic-link/functions.php:331
-#, fuzzy
+#: controllers/controller.php:38 magic-link/functions.php:124
+#: magic-link/functions.php:363
 msgid "Coached by"
 msgstr "تم تدريبه من"
 
-#: controllers/controller.php:26 magic-link/functions.php:95
-#: magic-link/functions.php:332
-#, fuzzy
+#: controllers/controller.php:39 magic-link/functions.php:125
+#: magic-link/functions.php:364
 msgid "My Link"
 msgstr "رابطي"
 
-#: controllers/controller.php:27 magic-link/functions.php:333
-#, fuzzy
+#: controllers/controller.php:41
+msgid "This is your own link. Save it so you can get back to this app."
+msgstr "هذا هو رابطك الخاص. احفظه لتتمكن من العودة إلى هذا التطبيق."
+
+#: controllers/controller.php:42 magic-link/functions.php:365
 msgid "Copy this link and share it with people you are coaching."
 msgstr "انسخ هذا الرابط وشاركه مع الأشخاص الذين تدرّبهم."
 
 # Placeholder moved to the end so the phrase reads as an idafa construction,
 # matching the theme's "Church Health" => "حالة الكنيسة".
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/controller.php:41 magic-link/functions.php:346
-#, fuzzy, php-format
+#: controllers/controller.php:59 magic-link/functions.php:378
+#, php-format
 msgid "%s Health"
 msgstr "حالة %s"
 
 # Left without the definite article on purpose: this same translation is
 # interpolated as %2$s into "Move these to the %1$s %2$s ...".
-#: controllers/controller.php:42 magic-link/functions.php:347
-#, fuzzy
+#: controllers/controller.php:60 magic-link/functions.php:379
 msgid "Tree"
 msgstr "شجرة"
 
 # The theme translates "Genmap" the same way.
-#: controllers/controller.php:43 magic-link/functions.php:348
-#, fuzzy
+#: controllers/controller.php:61 magic-link/functions.php:380
 msgid "GenMap"
 msgstr "خريطة الأجيال"
 
+#: controllers/controller.php:72 controllers/upgrade.php:44
+msgid "Secure your access"
+msgstr "أمّن وصولك"
+
+#: controllers/controller.php:73
+msgid "Create a username and password so you are not relying on this link."
+msgstr "أنشئ اسم مستخدم وكلمة مرور حتى لا تعتمد على هذا الرابط."
+
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: controllers/controller.php:44 magic-link/functions.php:90
-#, fuzzy
+#: controllers/controller.php:74 magic-link/functions.php:120
 msgid "Training"
 msgstr "التدريب"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/group.php:53
-#, fuzzy, php-format
+#: controllers/group.php:58
+#, php-format
 msgid "Create %s"
 msgstr "إنشاء %s"
 
 # Deliberately differs from the theme, which has "تسجيل" for "Save". That word
 # means "register/record" and is also the theme's translation of "Register";
 # "حفظ" is the usual Arabic label for a save button.
-#: controllers/group.php:63
-#, fuzzy
+#: controllers/group.php:68
 msgid "Save"
 msgstr "حفظ"
 
 #. translators: %s: lowercased singular name of the group post type, e.g. "church".
-#: controllers/group.php:301
-#, fuzzy, php-format
+#: controllers/group.php:312
+#, php-format
 msgid "Select a %s..."
 msgstr "اختر %s..."
 
@@ -281,57 +337,51 @@ msgstr "اختر %s..."
 # "أصلية" is feminine, agreeing with the usual labels (كنيسة / مجموعة). A site
 # that renames the post type to a masculine noun would need "أصلي".
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/group.php:311
-#, fuzzy, php-format
+#: controllers/group.php:322
+#, php-format
 msgid "Parent %s"
 msgstr "%s أصلية"
 
-#: controllers/group.php:345
-#, fuzzy
+#: controllers/group.php:356 controllers/group.php:364
+#: controllers/group.php:561
 msgid "Unauthorized action. Please refresh the page and try again."
 msgstr "إجراء غير مصرّح به. يرجى تحديث الصفحة والمحاولة مرة أخرى."
 
-#: controllers/group.php:367
-#, fuzzy
+#: controllers/group.php:384
 msgid "Back to AutoLink"
 msgstr "العودة إلى Autolink"
 
-#: controllers/group.php:577
-#, fuzzy
+#: controllers/group.php:631
 msgid "Unauthorized"
 msgstr "غير مصرّح به"
 
-#: controllers/group.php:592
-#, fuzzy
+#: controllers/group.php:645
 msgid "Could not fetch groups"
 msgstr "تعذّر جلب المجموعات"
 
-#: controllers/language.php:20
-#, fuzzy
+#: controllers/language.php:21
 msgid "No language was given."
 msgstr "لم يتم تحديد أي لغة."
 
-#: controllers/language.php:26
-#, fuzzy
+#: controllers/language.php:27
 msgid "That language is not available."
 msgstr "هذه اللغة غير متاحة."
 
 #: controllers/login.php:38 controllers/register.php:56
-#, fuzzy
 msgid "An unexpected error has occurred."
 msgstr "حدث خطأ غير متوقع."
 
 # Placeholder moved to the end so the phrase reads as an idafa construction.
 #. translators: %s: singular name of the group post type, e.g. "Church".
 #: controllers/tree.php:24
-#, fuzzy, php-format
+#, php-format
 msgid "%s Tree"
 msgstr "شجرة %s"
 
 # Placeholder moved to the front: Arabic puts the adjective after the noun.
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/tree.php:26
-#, fuzzy, php-format
+#, php-format
 msgid "Unassigned %s"
 msgstr "%s غير المعيّنة"
 
@@ -340,174 +390,199 @@ msgstr "%s غير المعيّنة"
 # depends on "Tree" being translated without a leading article - see that entry.
 #. translators: 1: singular name of the group post type, e.g. "Church". 2: the translated word "Tree".
 #: controllers/tree.php:28
-#, fuzzy, php-format
+#, php-format
 msgid "Move these to the %1$s %2$s to assign them to a %1$s."
 msgstr "انقل هذه إلى %2$s %1$s لتعيينها إلى %1$s."
 
 # The legend key of the tree view, not a password or an identifier.
 #: controllers/tree.php:29
-#, fuzzy
 msgid "Key"
 msgstr "المفتاح"
 
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/tree.php:31
-#, fuzzy, php-format
+#, php-format
 msgid "%s you are assigned"
 msgstr "%s المعيّنة لك"
 
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/tree.php:33
-#, fuzzy, php-format
+#, php-format
 msgid "%s assigned to those you coach"
 msgstr "%s المعيّنة لمن تدرّبهم"
 
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/tree.php:35
-#, fuzzy, php-format
+#, php-format
 msgid "%s you lead"
 msgstr "%s التي تقودها"
 
 #: controllers/tree.php:36
-#, fuzzy
 msgid "Generation Number"
 msgstr "رقم الجيل"
 
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/tree.php:38
-#, fuzzy, php-format
+#, php-format
 msgid "No %s found."
 msgstr "لم يتم العثور على %s."
 
-#: disciple-tools-autolink.php:179
-msgid "Autolink"
+#: controllers/upgrade.php:45
+msgid ""
+"Right now anyone with your link can open this app as you, and a link can "
+"stop working. Choose a username and password to keep long-term access of "
+"your own."
 msgstr ""
+"في الوقت الحالي يمكن لأي شخص لديه رابطك أن يفتح هذا التطبيق باسمك، وقد يتوقف "
+"الرابط عن العمل. اختر اسم مستخدم وكلمة مرور للحفاظ على وصول دائم خاص بك."
 
-# This key ('add') does not appear to be used by any template or script;
-# the intended wording is unclear. The theme translates "Magic Links" as
-# "الروابط السحرية".
-#: magic-link/functions.php:85
-#, fuzzy
-msgid "Add Magic"
-msgstr "إضافة رابط سحري"
-
-#: magic-link/functions.php:86
-#, fuzzy
-msgid "Go to Disciple.Tools"
-msgstr "الانتقال إلى Disciple.Tools"
-
-#: magic-link/functions.php:87
-#, fuzzy
-msgid "Update Survey Answers"
-msgstr "تحديث إجابات الاستبيان"
-
-#: magic-link/functions.php:88
-#, fuzzy
-msgid "Give Feedback"
-msgstr "إرسال ملاحظات"
-
-# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: magic-link/functions.php:89
-#, fuzzy
-msgid "Log Out"
-msgstr "تسجيل الخروج"
-
-#: magic-link/functions.php:91
-#, fuzzy
-msgid "Toggle Menu"
-msgstr "إظهار/إخفاء القائمة"
-
-# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: magic-link/functions.php:92
-#, fuzzy
-msgid "Language"
-msgstr "اللغة"
-
-# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: magic-link/functions.php:98
-#, fuzzy
-msgid "Close"
-msgstr "غلق"
-
-#: magic-link/functions.php:306
-#, fuzzy
-msgid "How many leaders are you coaching?"
-msgstr "كم عدد القادة الذين تدرّبهم؟"
-
-#. translators: %s: lowercased plural name of the group post type, e.g. "churches".
-#: magic-link/functions.php:311
-#, fuzzy, php-format
-msgid "How many %s are you leading?"
-msgstr "كم عدد %s التي تقودها؟"
-
-#: magic-link/login-app.php:144
-#, fuzzy
-msgid "Error: Invalid username/password combination."
-msgstr "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة."
-
-#: templates/genmap.php:6
-#, fuzzy
-msgid "Group Generation Map"
-msgstr "خريطة أجيال المجموعة"
-
-#: templates/login.php:32
-#, fuzzy
-msgid "Username or Email Address"
-msgstr "اسم المستخدم أو البريد الإلكتروني"
-
-# Deliberately differs from the theme, which has "كلمه المرور" - that spells
-# the first word with a final ha instead of a ta marbuta.
-#: templates/login.php:38 templates/register.php:39
-#, fuzzy
-msgid "Password"
-msgstr "كلمة المرور"
-
-# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: templates/login.php:48
-#, fuzzy
-msgid "Login"
-msgstr "تسجيل الدخول"
-
-#: templates/login.php:54 templates/login.php:55
-#, fuzzy
-msgid "Create Account"
-msgstr "إنشاء حساب"
-
-#: templates/login.php:65
-#, fuzzy
-msgid "Forgot Password?"
-msgstr "هل نسيت كلمة المرور؟"
-
-#: templates/parts/footer.php:3
-#, fuzzy
-msgid "Powered by"
-msgstr "مدعوم بواسطة"
-
-#: templates/parts/navbar.php:5
-#, fuzzy
-msgid "Autolink Home"
-msgstr "الصفحة الرئيسية لـ Autolink"
+#: controllers/upgrade.php:46
+msgid "Your churches and the people you coach stay exactly as they are."
+msgstr "ستبقى كنائسك والأشخاص الذين تدرّبهم كما هي تمامًا."
 
 # Deliberately differs from the theme, which has "المستخدم" ("the user").
 # This string labels a login/registration field, so it needs "name".
-#: templates/register.php:31
-#, fuzzy
+#: controllers/upgrade.php:47 templates/register.php:31
 msgid "Username"
 msgstr "اسم المستخدم"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
-#: templates/register.php:35
-#, fuzzy
+#: controllers/upgrade.php:48 templates/register.php:35
 msgid "Email"
 msgstr "البريد الالكتروني"
 
+# Deliberately differs from the theme, which has "كلمه المرور" - that spells
+# the first word with a final ha instead of a ta marbuta.
+#: controllers/upgrade.php:49 templates/login.php:38 templates/register.php:39
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: controllers/upgrade.php:50
+msgid "Confirm password"
+msgstr "تأكيد كلمة المرور"
+
+#: controllers/upgrade.php:51
+msgid "Create my login"
+msgstr "إنشاء حسابي"
+
+#: controllers/upgrade.php:52
+msgid "Not now"
+msgstr "ليس الآن"
+
+#: controllers/upgrade.php:53
+msgid "Once you have a login, your old link will stop working."
+msgstr "بمجرد حصولك على حساب، سيتوقف رابطك القديم عن العمل."
+
+#: controllers/upgrade.php:101
+msgid "Please fill out all fields."
+msgstr "يرجى تعبئة جميع الحقول."
+
+#: controllers/upgrade.php:107
+msgid "Passwords do not match."
+msgstr "كلمتا المرور غير متطابقتين."
+
+#: controllers/upgrade.php:113
+msgid "Please enter a valid email address."
+msgstr "يرجى إدخال بريد إلكتروني صالح."
+
+#: disciple-tools-autolink.php:201
+msgid "Autolink"
+msgstr ""
+
+#: magic-link/actor.php:607
+msgid "No record to save the language to."
+msgstr "لا يوجد سجل لحفظ اللغة فيه."
+
+# This key ('add') does not appear to be used by any template or script;
+# the intended wording is unclear. The theme translates "Magic Links" as
+# "الروابط السحرية".
+#: magic-link/functions.php:115
+msgid "Add Magic"
+msgstr "إضافة رابط سحري"
+
+#: magic-link/functions.php:116
+msgid "Go to Disciple.Tools"
+msgstr "الانتقال إلى Disciple.Tools"
+
+#: magic-link/functions.php:117
+msgid "Update Survey Answers"
+msgstr "تحديث إجابات الاستبيان"
+
+#: magic-link/functions.php:118
+msgid "Give Feedback"
+msgstr "إرسال ملاحظات"
+
+# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
+#: magic-link/functions.php:119
+msgid "Log Out"
+msgstr "تسجيل الخروج"
+
+#: magic-link/functions.php:121
+msgid "Toggle Menu"
+msgstr "إظهار/إخفاء القائمة"
+
+# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
+#: magic-link/functions.php:122
+msgid "Language"
+msgstr "اللغة"
+
+#: magic-link/functions.php:126
+msgid "Links for those you coach"
+msgstr "روابط لمن تدرّبهم"
+
+# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
+#: magic-link/functions.php:129
+msgid "Close"
+msgstr "غلق"
+
+#: magic-link/functions.php:338
+msgid "How many leaders are you coaching?"
+msgstr "كم عدد القادة الذين تدرّبهم؟"
+
+#. translators: %s: lowercased plural name of the group post type, e.g. "churches".
+#: magic-link/functions.php:343
+#, php-format
+msgid "How many %s are you leading?"
+msgstr "كم عدد %s التي تقودها؟"
+
+#: magic-link/login-app.php:144
+msgid "Error: Invalid username/password combination."
+msgstr "خطأ: اسم المستخدم أو كلمة المرور غير صحيحة."
+
+#: templates/genmap.php:6
+msgid "Group Generation Map"
+msgstr "خريطة أجيال المجموعة"
+
+#: templates/login.php:32
+msgid "Username or Email Address"
+msgstr "اسم المستخدم أو البريد الإلكتروني"
+
+# Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
+#: templates/login.php:48
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: templates/login.php:54 templates/login.php:55
+msgid "Create Account"
+msgstr "إنشاء حساب"
+
+#: templates/login.php:65
+msgid "Forgot Password?"
+msgstr "هل نسيت كلمة المرور؟"
+
+#: templates/parts/footer.php:3
+msgid "Powered by"
+msgstr "مدعوم بواسطة"
+
+#: templates/parts/navbar.php:5
+msgid "Autolink Home"
+msgstr "الصفحة الرئيسية لـ Autolink"
+
 #: templates/register.php:44
-#, fuzzy
 msgid "Confirm Password"
 msgstr "تأكيد كلمة المرور"
 
 # Matches the Disciple.Tools theme translation (dt-assets/translation/ar.po).
 #: templates/register.php:52
-#, fuzzy
 msgid "Register"
 msgstr "تسجيل"

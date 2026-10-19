@@ -17,7 +17,8 @@
                      class="logo__image">
             </div>
 
-            <form action="<?php echo esc_attr( $form_action ) ?>"
+            <form class="app-form"
+                  action="<?php echo esc_attr( $form_action ) ?>"
                   method="POST">
                 <?php wp_nonce_field( 'dt_autolink_login' ); ?>
 
@@ -42,11 +43,11 @@
                          required></dt-text>
 
                 <div class="login__buttons">
-                    <dt-button context="success"
+                    <submit-button context="success"
                                tabindex="3"
                                type="submit">
                         <?php esc_html_e( 'Login', 'disciple-tools-autolink' ) ?>
-                    </dt-button>
+                    </submit-button>
 
                     <dt-button context="link"
                                href="<?php echo esc_url( $register_url ); ?>"

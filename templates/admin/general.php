@@ -69,6 +69,26 @@
                         </tr>
                         <tr>
                             <td style="white-space: nowrap;">
+								<?php esc_html_e( 'Contact links last', 'disciple-tools-autolink' ) ?>
+                            </td>
+                            <td style="text-align: left;">
+                                <input type="number"
+                                       name="disciple_tools_autolink_contact_link_validity_amount"
+                                       min="1"
+                                       step="1"
+                                       style="width: 5em;"
+                                       value="<?php echo esc_attr( $old['disciple_tools_autolink_contact_link_validity_amount'] ) ?>"/>
+                                <select name="disciple_tools_autolink_contact_link_validity_unit">
+									<?php foreach ( $validity_units as $unit => $unit_label ): ?>
+                                        <option value="<?php echo esc_attr( $unit ) ?>" <?php selected( $old['disciple_tools_autolink_contact_link_validity_unit'], $unit ) ?>>
+											<?php echo esc_html( $unit_label ) ?>
+                                        </option>
+									<?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="white-space: nowrap;">
 								<?php echo esc_attr( $training_videos_translations['label'] ) ?>
                             </td>
                             <td style="text-align: left;">
@@ -141,6 +161,23 @@
 
                             <p>
 								<?php esc_html_e( 'If enabled, an "Autolink" menu item will be present in the primary Disciple.Tools menu allowing easy access to Autolink.', 'disciple-tools-autolink' ) ?>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>
+								<?php esc_html_e( 'Contact links last', 'disciple-tools-autolink' ) ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+								<?php esc_html_e( 'A contact link opens Autolink as that contact, with no login. A link is created when someone presses Copy link, and stops working after this long.', 'disciple-tools-autolink' ) ?>
+                            </p>
+                            <p>
+								<?php esc_html_e( 'Copying a link that still works extends it rather than replacing it, so copies already shared keep working. Changing this setting affects links copied from now on.', 'disciple-tools-autolink' ) ?>
                             </p>
                         </td>
                     </tr>

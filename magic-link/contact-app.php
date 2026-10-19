@@ -11,8 +11,8 @@ class Disciple_Tools_Autolink_Magic_Contact_App extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Autolink';
-    public $page_description = 'Autolink Share Link';
+    public $page_title = 'Autolink - Share Link';
+    public $page_description = 'Invite people to Autolink. Anyone who registers through this link is coached by this contact.';
     public $root = "autolink";
     public $type = 'share';
     public $post_type = 'contacts';

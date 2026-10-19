@@ -116,7 +116,7 @@ class GenMapper {
      </form>
      <div id="edit-buttons">
        <button id="edit-cancel"> ${this.translations.cancel_label}  </button>
-       <button id="open-record"> ${this.translations.open_label} </button>
+       <button id="edit-submit"> ${this.translations.save_changes_label} </button>
        <button id="rebase-node"> ${this.translations.rebase_label} </button>
      </div>
     </div>`;
@@ -232,9 +232,6 @@ class GenMapper {
         d3.select("#edit-cancel").on("click", () => {
             this.editGroupElement.classList.remove("edit-group--active");
         });
-        d3.select("#open-record").on("click", () => {
-            this.openRecord(group);
-        });
         d3.select("#rebase-node").on("click", () => {
             this.rebaseOnNode(group);
             this.editGroupElement.classList.remove("edit-group--active");
@@ -248,6 +245,10 @@ class GenMapper {
                 groupData[field.header] = this.editFieldElements[field.header].value;
                 if (field.header === "name") {
                     groupFields["title"] = this.editFieldElements[field.header].value;
+                    // The box draws its label from line_1, which the server fills
+                    // with the name. Without this the redraw below keeps showing
+                    // the old name until the page is reloaded.
+                    groupData["line_1"] = groupData["name"];
                 }
             } else if (field.type === "radio") {
                 field.values.forEach((value) => {
@@ -269,16 +270,6 @@ class GenMapper {
 
         this.editGroupElement.classList.remove("edit-group--active");
         this.redraw(template);
-    }
-
-    openRecord(d) {
-        console.log("here");
-        let id = d.data.id;
-        let url = genApiTemplate.app_url;
-        let query = `?action=group&post=${id}&return=${window.location.href}`;
-
-        var win = window.open(url + query, "_blank");
-        win.focus();
     }
 
     redraw(template) {

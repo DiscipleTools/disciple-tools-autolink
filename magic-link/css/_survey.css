@@ -8,7 +8,7 @@
 
 .question__pagination {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
     gap: 8px;
     margin-block-start: 1rem;
 }
@@ -32,10 +32,13 @@
     width: calc(var(--progress) - 1rem);
     height: 0.2rem;
     background: var(--primary-color);
-    transform: translate(-0.4em, 0.05rem);
-    border-top-right-radius: 50rem;
-    border-top-left-radius: 50rem;
-    border-bottom-right-radius: var(--progress-border-radius);
+    /* Pulled back under the tile's rounded corner. Logical, so it reaches for
+       the corner the bar actually grows from in either direction. */
+    margin-inline-start: -0.4em;
+    transform: translateY(0.05rem);
+    border-start-start-radius: 50rem;
+    border-start-end-radius: 50rem;
+    border-end-end-radius: var(--progress-border-radius);
     position: absolute;
     top: 0;
 }

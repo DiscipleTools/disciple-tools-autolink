@@ -89,10 +89,12 @@ class Disciple_Tools_Autolink_Groups_Tree {
 		$pre_tree            = [];
 		$unassigned_group_id = 'u';
 
-		$contact = DT_Posts::list_posts( 'contacts', [
-			'corresponds_to_user' => get_current_user_id(),
-			'limit'               => 1000
-		], false )['posts'][0];
+		$actor   = Disciple_Tools_Autolink_Actor::current();
+		$contact = $actor->contact();
+
+		if ( ! $contact ) {
+			return [];
+		}
 
 		$meta = [
 			'assigned' => [],
@@ -101,13 +103,11 @@ class Disciple_Tools_Autolink_Groups_Tree {
 			'titles'   => [],
 		];
 
-		$groups = DT_Posts::list_posts( 'groups', [
-			'assigned_to' => [ get_current_user_id() ],
-		], false )['posts'] ?? [];
+		$allowed_group_ids = [];
 
-		$coaching = DT_Posts::list_posts( 'contacts', [
-			'coached_by' => [ $contact['ID'] ],
-		], false )['posts'] ?? [];
+		$groups = $actor->own_groups();
+
+		$coaching = $actor->coached_contacts();
 
 		foreach ( $groups as $group ) {
 			$allowed_group_ids[]              = (int) $group['ID'];
@@ -121,16 +121,24 @@ class Disciple_Tools_Autolink_Groups_Tree {
 		}
 
 		foreach ( $coaching as $coached ) {
-			$coached_user_id = $coached['corresponds_to_user'] ?? false;
-			if ( ! $coached_user_id ) {
-				continue;
-			}
-			$coached_groups = DT_Posts::list_posts( 'groups', [
-				'assigned_to' => [ $coached_user_id ],
-			], false )['posts'] ?? [];
+			// A coached contact may have no Disciple.Tools login of their own -
+			// that is the whole point of contact links - so their churches are
+			// found by whichever handle they do have.
+			$coached_groups = Disciple_Tools_Autolink_Actor::query_groups_for_contact( $coached, [
+				'limit' => 1000,
+			] )['posts'];
 
 			foreach ( $coached_groups as $coached_group ) {
-				$allowed_group_ids[]                      = (int) $coached_group['ID'];
+				// A church this actor and someone they coach both lead is the
+				// actor's own - the usual case, since adding a new leader on the
+				// church form makes them someone the actor coaches. Left to run on,
+				// this would refile it as a coaching church: not draggable, and
+				// under "Unassigned" when it has no parent.
+				if ( ! empty( $meta['assigned'][ $coached_group['ID'] ] ) ) {
+					continue;
+				}
+
+				$allowed_group_ids[]                    = (int) $coached_group['ID'];
 				$groups[]                                 = $coached_group;
 				$meta['leading'][ $coached_group['ID'] ]  = array_filter( $coached_group['leaders'], function ( $leader ) use ( $contact ) {
 					return $leader['ID'] == $contact['ID'];

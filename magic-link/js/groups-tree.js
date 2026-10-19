@@ -90,7 +90,7 @@ export class ChurchTile extends LitElement {
           ul {
             list-style: none;
             position: relative;
-            padding-left: calc(var(--tree-spacing) * 2);
+            padding-inline-start: calc(var(--tree-spacing) * 2);
           }
 
           .groups {
@@ -151,7 +151,7 @@ export class ChurchTile extends LitElement {
 
           #tree,
           #unassigned-tree {
-            padding-left: 0;
+            padding-inline-start: 0;
           }
 
           #unassigned.unassigned--empty {
@@ -167,10 +167,13 @@ export class ChurchTile extends LitElement {
             display: flex;
             align-items: center;
             padding: calc(var(--tree-spacing) * .5) calc(var(--tree-spacing) * 1.5) calc(var(--tree-spacing) * .5) calc(var(--tree-spacing) * 1.5);
-            border-radius: 0 5px 5px 0;
+            border-start-start-radius: 0;
+            border-start-end-radius: 5px;
+            border-end-end-radius: 5px;
+            border-end-start-radius: 0;
             position: relative;
             border: solid 1px #afc1cc;
-            border-left-color: #2C5364;
+            border-inline-start-color: #2C5364;
             min-height: calc(var(--tree-spacing) * 3);
             gap: var(--tree-spacing);
           }
@@ -183,7 +186,7 @@ export class ChurchTile extends LitElement {
             background-color: #2C5364;
             position: absolute;
             top: 50%;
-            left: calc(var(--tree-spacing) * -2);
+            inset-inline-start: calc(var(--tree-spacing) * -2);
             transform: translateY(1px);
           }
 
@@ -191,8 +194,8 @@ export class ChurchTile extends LitElement {
             content: '';
             display: block;
             width: 1px;
-            border-left: 1px inset #2C5364;
-            left: calc(var(--tree-spacing) * -2 - 1px);
+            border-inline-start: 1px inset #2C5364;
+            inset-inline-start: calc(var(--tree-spacing) * -2 - 1px);
             top: calc(var(--tree-spacing) * -2 - 2px);
             bottom: 0;
             position: absolute;
@@ -202,8 +205,8 @@ export class ChurchTile extends LitElement {
             content: '';
             display: block;
             width: 1px;
-            border-left: 1px inset #2C5364;
-            left: calc(var(--tree-spacing) * -2);
+            border-inline-start: 1px inset #2C5364;
+            inset-inline-start: calc(var(--tree-spacing) * -2);
             top: -1px;
             bottom: -2px;
             position: absolute;
@@ -226,7 +229,7 @@ export class ChurchTile extends LitElement {
 
           .group__handle {
             padding-top: calc(var(--tree-spacing) * .5);
-            margin-left: calc(var(--tree-spacing) * -1.5);
+            margin-inline-start: calc(var(--tree-spacing) * -1.5);
             width: var(--tree-spacing);
           }
 
@@ -266,7 +269,7 @@ export class ChurchTile extends LitElement {
           }
           
           .group__icon {
-            margin-left: var(--tree-spacing);
+            margin-inline-start: var(--tree-spacing);
             display: block;
             transform: translateY(2px);
           }
@@ -277,8 +280,11 @@ export class ChurchTile extends LitElement {
 
           .key {
             border: solid 1px #afc1cc;
-            border-left-color: #2C5364;
-            border-radius: 0 5px 5px 0;
+            border-inline-start-color: #2C5364;
+            border-start-start-radius: 0;
+            border-start-end-radius: 5px;
+            border-end-end-radius: 5px;
+            border-end-start-radius: 0;
             background-color: #E2E2E2;
           }
 

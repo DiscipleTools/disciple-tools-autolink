@@ -14,10 +14,13 @@
     display: flex;
     align-items: center;
     padding: calc(var(--tree-spacing) * .5) calc(var(--tree-spacing) * 1.5) calc(var(--tree-spacing) * .5) calc(var(--tree-spacing) * 1.5);
-    border-radius: 0 5px 5px 0;
+    border-start-start-radius: 0;
+    border-start-end-radius: 5px;
+    border-end-end-radius: 5px;
+    border-end-start-radius: 0;
     position: relative;
     border: solid 1px #afc1cc;
-    border-left-color: #2C5364;
+    border-inline-start-color: #2C5364;
     min-height: calc(var(--tree-spacing) * 3);
     gap: var(--tree-spacing);
 }
@@ -35,7 +38,7 @@
 
 .sortable-drag .group__handle {
     padding-top: calc(var(--tree-spacing) * .5);
-    margin-left: calc(var(--tree-spacing) * -1.5);
+    margin-inline-start: calc(var(--tree-spacing) * -1.5);
     width: var(--tree-spacing);
 }
 

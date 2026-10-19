@@ -182,12 +182,15 @@ export class Churches extends DtBase {
                         .group="${group}"
                         .fields="${fields}"
                         ?opened="${opened}"></app-church>
-                <app-church-menu>
+                <app-card-menu>
+                    ${links.view_group
+                        ? html`
+                            <dt-button context="primary"
+                                       href="${links.view_group + "&post=" + group.ID}">
+                                ${translations.view_group}
+                            </dt-button>`
+                        : null}
                     <dt-button context="primary"
-                               href="${links.view_group + "&post=" + group.ID}">
-                        ${translations.view_group}
-                    </dt-button>
-                    <dt-button context="primary" W
                                href="${links.edit_group + "&post=" + group.ID}"
                     >
                         ${translations.edit_group}
@@ -197,7 +200,7 @@ export class Churches extends DtBase {
                                confirm="${translations.delete_group_confirm}">
                         ${translations.delete_group}
                     </dt-button>
-                </app-church-menu>
+                </app-card-menu>
             </church-tile>
         `
     }

@@ -3,8 +3,12 @@
 class Disciple_Tools_Autolink_Field_Controller extends Disciple_Tools_Autolink_Controller {
     /**
      * Update a field
+     *
+     * @param WP_REST_Request $request
+     * @param array $params
+     * @param Disciple_Tools_Autolink_Actor $actor
      */
-    public function update( WP_REST_Request $request, $params, $user_id ) {
+    public function update( WP_REST_Request $request, $params, $actor ) {
         $body      = $request->get_json_params();
         $whitelist = apply_filters( 'autolink_updatable_group_fields', [] );
         if ( ! isset( $body['id'] ) || ! isset( $body['value'] ) ) {
@@ -35,12 +39,20 @@ class Disciple_Tools_Autolink_Field_Controller extends Disciple_Tools_Autolink_C
             wp_send_json_error( [ "message" => "Invalid request" ] );
         }
 
+        // The record id arrives in the request body, so it has to be checked
+        // against what this actor actually holds. A contact link has no
+        // capabilities for DT_Posts to fall back on, and relying on them in user
+        // mode only ever hid the same question.
+        if ( ! $this->can_update( $actor, $post_type, $id ) ) {
+            wp_send_json_error( [ "message" => "Invalid request" ] );
+        }
+
         $payload = [
             $field => $this->format_value( $post_type, $field, $value )
         ];
 
         try {
-            $result = DT_Posts::update_post( $post_type, $id, $payload );
+            $result = DT_Posts::update_post( $post_type, $id, $payload, false, false );
         } catch ( Exception $e ) {
             wp_send_json_error( [ "message" => $e->getMessage() ] );
         }
@@ -51,6 +63,26 @@ class Disciple_Tools_Autolink_Field_Controller extends Disciple_Tools_Autolink_C
         }
 
         wp_send_json_error( [ "message" => $result->get_error_message() ] );
+    }
+
+    /**
+     * Whether this actor may write to the record the request named.
+     *
+     * @param Disciple_Tools_Autolink_Actor $actor
+     * @param string $post_type
+     * @param int|string $id
+     *
+     * @return bool
+     */
+    private function can_update( $actor, $post_type, $id ) {
+        switch ( $post_type ) {
+            case 'groups':
+                return $actor->can_edit_group( $id );
+            case 'contacts':
+                return $actor->can_edit_contact( $id );
+            default:
+                return false;
+        }
     }
 
     /**
