@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Disciple.Tools - Autolink 1.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disciple-tools-"
 "autolink\n"
-"POT-Creation-Date: 2026-09-25T08:46:16+00:00\n"
+"POT-Creation-Date: 2026-10-27T09:38:56+00:00\n"
 "PO-Revision-Date: 2024-06-14 11:59+0000\n"
 "Last-Translator: Leila Mohamed <nevergvup.leila@gmail.com>\n"
 "Language-Team: Swahili <https://translate.disciple.tools/projects/disciple-"
@@ -18,241 +18,408 @@ msgstr ""
 "X-Generator: Weblate 5.5.5\n"
 "X-Domain: disciple-tools-autolink\n"
 
-#. Plugin Name of the plugin
-#: disciple-tools-autolink.php
-msgid "Disciple.Tools - Autolink"
-msgstr "Zana za Wanafunzi - Kiunganishi kiotomatiki"
-
-#. Plugin URI of the plugin
-#: disciple-tools-autolink.php
-msgid "https://github.com/DiscipleTools/disciple-tools-autolink"
-msgstr "https://github.com/DiscipleTools/disciple-tools-autolink"
-
-#. Description of the plugin
-#: disciple-tools-autolink.php
-msgid ""
-"Provides a simplified interface for managing and visualizing your Disciple."
-"Tools network. Share access with your downstream leaders to easily build "
-"your group tree."
-msgstr ""
-"Hutoa kiolesura kilichorahisishwa cha kudhibiti na kuibua mtandao wako wa "
-"Disciple.Tools. Shiriki ufikiaji na viongozi wako wa chini ili kuunda mti wa "
-"kikundi chako kwa urahisi."
-
 #. Author URI of the plugin
 #: disciple-tools-autolink.php
 msgid "https://www.eastwest.org/"
 msgstr "https://www.eastwest.org/"
 
-#: charts/groups-genmap.php:104
+#: charts/groups-genmap.php:109
 msgid "Parent"
 msgstr "Mzazi"
 
-#: charts/groups-genmap.php:105
+#: charts/groups-genmap.php:110
 msgid "Save Changes"
 msgstr "Hifadhi mabadiliko"
 
-#: charts/groups-genmap.php:106 controllers/group.php:62
+#: charts/groups-genmap.php:111 controllers/contacts.php:82
+#: controllers/contacts.php:367 controllers/group.php:67
 msgid "Cancel"
 msgstr "Ghairi"
 
-#: charts/groups-genmap.php:107 charts/groups-genmap.php:114
-msgid "Open Record"
-msgstr "Fungua Rekodi"
-
-#: charts/groups-genmap.php:108
+#: charts/groups-genmap.php:112
 msgid "Center on this Node"
 msgstr "Katikati kwenye Nodi hii"
 
-#: charts/groups-genmap.php:109
+#: charts/groups-genmap.php:113
 msgid "OK"
 msgstr "sawa"
 
-#: charts/groups-genmap.php:110
+#: charts/groups-genmap.php:114
 msgid "Edit Record"
 msgstr "Hariri Rekodi"
 
-#: charts/groups-genmap.php:111 controllers/admin-general.php:34
+#: charts/groups-genmap.php:115 controllers/admin-general.php:44
 msgid "Reset"
 msgstr "Weka upya"
 
-#: charts/groups-genmap.php:112
+#: charts/groups-genmap.php:116
 msgid "Zoom In"
 msgstr "Kuza"
 
-#: charts/groups-genmap.php:113
+#: charts/groups-genmap.php:117
 msgid "Zoom Out"
 msgstr "Vuta Nyuma"
 
+#: charts/groups-genmap.php:118
+msgid "Open Record"
+msgstr "Fungua Rekodi"
+
+#: charts/groups-genmap.php:119
+msgid "The map could not be loaded. Please try again."
+msgstr ""
+
+#: controllers/admin-general.php:26
+msgid "Hours"
+msgstr ""
+
 #: controllers/admin-general.php:27
+msgid "Days"
+msgstr ""
+
+#: controllers/admin-general.php:28
+msgid "Weeks"
+msgstr ""
+
+#: controllers/admin-general.php:29
+msgid "Months"
+msgstr ""
+
+#: controllers/admin-general.php:30
+msgid "Never expires"
+msgstr ""
+
+#: controllers/admin-general.php:37
 msgid "Training videos could not be loaded. Resetting to default content."
 msgstr ""
 "Video za mafunzo hazikuweza kupakiwa. Inaweka upya kwa maudhui chaguomsingi."
 
-#: controllers/admin-general.php:31
+#: controllers/admin-general.php:41
 msgid "Training Videos"
 msgstr "Video za Mafunzo"
 
-#: controllers/admin-general.php:32
+#: controllers/admin-general.php:42
 msgid "Title"
 msgstr "Kichwa"
 
-#: controllers/admin-general.php:33
+#: controllers/admin-general.php:43
 msgid "Embed"
 msgstr "Pachika"
 
-#: controllers/admin-general.php:35
+#: controllers/admin-general.php:45 controllers/contacts.php:81
 msgid "Add"
 msgstr "Ongeza"
 
-#: controllers/admin-general.php:36
+#: controllers/admin-general.php:46
 msgid "Remove"
 msgstr "Ondoa"
 
-#: controllers/admin-general.php:37
+#: controllers/admin-general.php:47
 msgid "Are you sure you want to reset the training videos to default content?"
 msgstr ""
 "Je, una uhakika unataka kuweka upya video za mafunzo hadi maudhui "
 "chaguomsingi?"
 
-#: controllers/admin-general.php:38
+#: controllers/admin-general.php:48
 msgid "Are you sure you want to remove this video?"
 msgstr "Je, una uhakika unataka kuondoa video hii?"
 
-#: controllers/admin-general.php:39
+#: controllers/admin-general.php:49
 msgid "Up"
 msgstr ""
 
-#: controllers/admin-general.php:40
+#: controllers/admin-general.php:50
 msgid "Down"
 msgstr ""
 
-#: controllers/admin-general.php:109
+#: controllers/admin-general.php:119
 msgid "Invalid training videos."
 msgstr ""
 
 #. translators: %s: plural name of the group post type, e.g. "Churches".
-#: controllers/app.php:35 controllers/controller.php:29
-#: magic-link/functions.php:97 magic-link/functions.php:335
+#: controllers/app.php:34 controllers/controller.php:44
+#: magic-link/functions.php:132 magic-link/functions.php:371
 #, php-format
 msgid "My %s"
 msgstr "%s Yangu"
 
-#: controllers/app.php:36
+#: controllers/app.php:35
 msgid "Church Start Date"
 msgstr ""
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:38 controllers/controller.php:38
-#: magic-link/functions.php:343
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/app.php:37 controllers/contacts.php:43
+#: controllers/controller.php:56 magic-link/functions.php:379
 #, php-format
 msgid "View %s"
 msgstr "Angalia %s"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:40
+#: controllers/app.php:39
 #, php-format
 msgid "Delete %s"
 msgstr ""
 
 #. translators: %s: lowercased singular name of the group post type, e.g. "church".
-#: controllers/app.php:42
+#: controllers/app.php:41
 #, fuzzy, php-format
 #| msgid "Are you sure you want to remove this video?"
 msgid "Are you sure you want to delete this %s?"
 msgstr "Je, una uhakika unataka kuondoa video hii?"
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/app.php:44 controllers/group.php:50
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/app.php:43 controllers/contacts.php:41
+#: controllers/contacts.php:363 controllers/group.php:55
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: controllers/app.php:45
+#: controllers/app.php:44
 msgid "More"
 msgstr ""
 
-#: controllers/controller.php:22 magic-link/functions.php:93
-#: magic-link/functions.php:328
+#. translators: %s: lowercased plural name of the group post type, e.g. "churches".
+#: controllers/contacts.php:28
+#, php-format
+msgid ""
+"The people you coach or are assigned, and the leaders and members of your %s."
+msgstr ""
+
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/contacts.php:30
+#, php-format
+msgid "Add %s"
+msgstr ""
+
+#: controllers/contacts.php:33
+#, fuzzy
+#| msgid "Disciple.Tools - Autolink"
+msgid "Has a Disciple.Tools login"
+msgstr "Zana za Wanafunzi - Kiunganishi kiotomatiki"
+
+#: controllers/contacts.php:34
+msgid "Copy link"
+msgstr ""
+
+#: controllers/contacts.php:35
+msgid "Copied"
+msgstr ""
+
+#: controllers/contacts.php:36
+msgid "Could not copy"
+msgstr ""
+
+#. translators: %s: the date and time a magic link stops working.
+#: controllers/contacts.php:38
+#, php-format
+msgid "Link works until %s"
+msgstr ""
+
+#: controllers/contacts.php:39
+msgid "Link expired. Copy it to send a new one."
+msgstr ""
+
+#: controllers/contacts.php:50
+#, php-format
+msgid ""
+"No %1$s yet. People you coach, and the leaders and members of your %2$s, "
+"will appear here."
+msgstr ""
+
+#. translators: %s: singular name of the contact post type, e.g. "Contact".
+#: controllers/contacts.php:78
+#, php-format
+msgid "Add a %s"
+msgstr ""
+
+#: controllers/contacts.php:79
+msgid ""
+"They will be added to the people you coach, and get their own link into this "
+"app."
+msgstr ""
+
+#: controllers/contacts.php:80 controllers/contacts.php:364
+msgid "Name"
+msgstr ""
+
+#: controllers/contacts.php:103 controllers/contacts.php:254
+#: controllers/upgrade.php:95
+msgid "Unable to verify request. Please try again."
+msgstr ""
+
+#: controllers/contacts.php:109 controllers/contacts.php:264
+msgid "Please enter a name."
+msgstr ""
+
+#: controllers/contacts.php:115
+msgid "Your record could not be found."
+msgstr ""
+
+#: controllers/contacts.php:207 controllers/group.php:417
+msgid "Back to AutoLink"
+msgstr ""
+
+#: controllers/contacts.php:313
+msgid "You cannot share a link for this person."
+msgstr ""
+
+#: controllers/contacts.php:319
+msgid "This person signs in with their own login."
+msgstr ""
+
+#: controllers/contacts.php:366 controllers/group.php:68
+msgid "Save"
+msgstr ""
+
+#: controllers/contacts.php:618
+msgid "Coaching"
+msgstr ""
+
+#: controllers/contacts.php:619
+#, fuzzy
+#| msgid "Unassigned %s"
+msgid "Assigned"
+msgstr "Haijakabidhiwa %s"
+
+#: controllers/contacts.php:620
+msgid "Leader"
+msgstr ""
+
+#: controllers/contacts.php:621
+msgid "Member"
+msgstr ""
+
+#. translators: %s: a list of church names.
+#: controllers/contacts.php:626
+#, php-format
+msgid "Leads %s"
+msgstr ""
+
+#. translators: %s: a list of church names.
+#: controllers/contacts.php:628
+#, php-format
+msgid "Member of %s"
+msgstr ""
+
+#: controllers/controller.php:35 magic-link/functions.php:127
+#: magic-link/functions.php:364
 msgid "Hello,"
 msgstr ""
 
-#: controllers/controller.php:25 magic-link/functions.php:94
-#: magic-link/functions.php:331
+#: controllers/controller.php:38 magic-link/functions.php:128
+#: magic-link/functions.php:367
 msgid "Coached by"
 msgstr ""
 
-#: controllers/controller.php:26 magic-link/functions.php:95
-#: magic-link/functions.php:332
+#: controllers/controller.php:39 magic-link/functions.php:129
+#: magic-link/functions.php:368
 msgid "My Link"
 msgstr ""
 
-#: controllers/controller.php:27 magic-link/functions.php:333
+#: controllers/controller.php:41
+msgid "This is your own link. Save it so you can get back to this app."
+msgstr ""
+
+#: controllers/controller.php:42 magic-link/functions.php:369
 msgid "Copy this link and share it with people you are coaching."
 msgstr ""
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/controller.php:41 magic-link/functions.php:346
+#: controllers/controller.php:59 magic-link/functions.php:382
 #, php-format
 msgid "%s Health"
 msgstr ""
 
-#: controllers/controller.php:42 magic-link/functions.php:347
+#: controllers/controller.php:60 magic-link/functions.php:383
 msgid "Tree"
 msgstr ""
 
-#: controllers/controller.php:43 magic-link/functions.php:348
+#: controllers/controller.php:61 magic-link/functions.php:384
 msgid "GenMap"
 msgstr ""
 
-#: controllers/controller.php:44 magic-link/functions.php:90
+#: controllers/controller.php:72 controllers/upgrade.php:44
+msgid "Secure your access"
+msgstr ""
+
+#: controllers/controller.php:73
+msgid "Create a username and password so you are not relying on this link."
+msgstr ""
+
+#. translators: %s: the date and time a magic link stops working.
+#: controllers/controller.php:81
+#, php-format
+msgid "This link works until %s."
+msgstr ""
+
+#: controllers/controller.php:84
+msgid ""
+"Ask your coach to renew it, or create a login so you are not relying on a "
+"link."
+msgstr ""
+
+#: controllers/controller.php:85
+msgid "Ask your coach to renew it."
+msgstr ""
+
+#: controllers/controller.php:86 magic-link/functions.php:124
 msgid "Training"
 msgstr ""
 
+#: controllers/genmap.php:37
+msgid "You cannot add a church here."
+msgstr ""
+
+#: controllers/genmap.php:41
+msgid "New"
+msgstr ""
+
+#: controllers/genmap.php:94
+msgid "You cannot edit this church."
+msgstr ""
+
+#: controllers/genmap.php:114
+msgid "Nothing to save."
+msgstr ""
+
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/group.php:53
+#: controllers/group.php:58
 #, fuzzy, php-format
 #| msgid "Create Account"
 msgid "Create %s"
 msgstr "Tengeneza akaunti"
 
-#: controllers/group.php:63
-msgid "Save"
-msgstr ""
-
 #. translators: %s: lowercased singular name of the group post type, e.g. "church".
-#: controllers/group.php:301
+#: controllers/group.php:345
 #, php-format
 msgid "Select a %s..."
 msgstr ""
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/group.php:311
+#: controllers/group.php:355
 #, php-format
 msgid "Parent %s"
 msgstr "Mzazi %s"
 
-#: controllers/group.php:345
+#: controllers/group.php:389 controllers/group.php:397
+#: controllers/group.php:525
 msgid "Unauthorized action. Please refresh the page and try again."
 msgstr ""
 
-#: controllers/group.php:367
-msgid "Back to AutoLink"
-msgstr ""
-
-#: controllers/group.php:577
+#: controllers/group.php:713
 msgid "Unauthorized"
 msgstr ""
 
-#: controllers/group.php:592
+#: controllers/group.php:727
 msgid "Could not fetch groups"
 msgstr ""
 
-#: controllers/language.php:20
+#: controllers/language.php:21
 msgid "No language was given."
 msgstr ""
 
-#: controllers/language.php:26
+#: controllers/language.php:27
 msgid "That language is not available."
 msgstr ""
 
@@ -310,48 +477,134 @@ msgstr "Nambari ya kizazi"
 msgid "No %s found."
 msgstr "Hapana %s found."
 
-#: disciple-tools-autolink.php:179
+#: controllers/upgrade.php:45
+msgid ""
+"Right now anyone with your link can open this app as you, and a link can "
+"stop working. Choose a username and password to keep long-term access of "
+"your own."
+msgstr ""
+
+#: controllers/upgrade.php:46
+msgid "Your churches and the people you coach stay exactly as they are."
+msgstr ""
+
+#: controllers/upgrade.php:47 templates/register.php:32
+msgid "Username"
+msgstr "Jina la mtumiaji"
+
+#: controllers/upgrade.php:48 templates/register.php:36
+msgid "Email"
+msgstr "Barua pepe"
+
+#: controllers/upgrade.php:49 templates/login.php:39 templates/register.php:40
+msgid "Password"
+msgstr "Nenosiri"
+
+#: controllers/upgrade.php:50
+#, fuzzy
+#| msgid "Confirm Password"
+msgid "Confirm password"
+msgstr "Thibitisha Nenosiri"
+
+#: controllers/upgrade.php:51
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create my login"
+msgstr "Tengeneza akaunti"
+
+#: controllers/upgrade.php:52
+msgid "Not now"
+msgstr ""
+
+#: controllers/upgrade.php:53
+msgid "Once you have a login, your old link will stop working."
+msgstr ""
+
+#: controllers/upgrade.php:101
+msgid "Please fill out all fields."
+msgstr ""
+
+#: controllers/upgrade.php:107
+msgid "Passwords do not match."
+msgstr ""
+
+#: controllers/upgrade.php:113
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: disciple-tools-autolink.php:192 magic-link/actor.php:742
 msgid "Autolink"
 msgstr "Unganisha kiotomatiki"
 
-#: magic-link/functions.php:85
+#: magic-link/actor.php:660
+msgid "No record to save the language to."
+msgstr ""
+
+#. translators: %s: the name of the contact who made the change.
+#: magic-link/actor.php:741
+#, fuzzy, php-format
+#| msgid "Autolink"
+msgid "%s (via Autolink)"
+msgstr "Unganisha kiotomatiki"
+
+#. translators: %s: the name of the contact who created the record.
+#: magic-link/actor.php:752
+#, php-format
+msgid "Created through Autolink by %s"
+msgstr ""
+
+#: magic-link/actor.php:753
+msgid "Created through Autolink"
+msgstr ""
+
+#: magic-link/contact-links.php:248
+msgid "Never"
+msgstr ""
+
+#: magic-link/functions.php:119
 msgid "Add Magic"
 msgstr "Ongeza Uchawi"
 
-#: magic-link/functions.php:86
+#: magic-link/functions.php:120
 msgid "Go to Disciple.Tools"
 msgstr "Nenda kwa Disciple.Tools"
 
-#: magic-link/functions.php:87
+#: magic-link/functions.php:121
 msgid "Update Survey Answers"
 msgstr "Sasisha Majibu ya Utafiti"
 
-#: magic-link/functions.php:88
+#: magic-link/functions.php:122
 msgid "Give Feedback"
 msgstr "Toa Maoni"
 
-#: magic-link/functions.php:89
+#: magic-link/functions.php:123
 msgid "Log Out"
 msgstr "Toka nje"
 
-#: magic-link/functions.php:91
+#: magic-link/functions.php:125
 msgid "Toggle Menu"
 msgstr "Geuza Menyu"
 
-#: magic-link/functions.php:92
+#: magic-link/functions.php:126
 msgid "Language"
 msgstr ""
 
-#: magic-link/functions.php:98
+#: magic-link/functions.php:130
+#, fuzzy
+#| msgid "%s assigned to those you coach"
+msgid "Links for those you coach"
+msgstr "%s kwa wale unaowafundisha"
+
+#: magic-link/functions.php:133
 msgid "Close"
 msgstr ""
 
-#: magic-link/functions.php:306
+#: magic-link/functions.php:342
 msgid "How many leaders are you coaching?"
 msgstr "Unafundisha viongozi wangapi?"
 
 #. translators: %s: lowercased plural name of the group post type, e.g. "churches".
-#: magic-link/functions.php:311
+#: magic-link/functions.php:347
 #, php-format
 msgid "How many %s are you leading?"
 msgstr "Ngapi %s unaongoza?"
@@ -364,23 +617,19 @@ msgstr "Hitilafu: Mchanganyiko batili wa jina la mtumiaji/nenosiri."
 msgid "Group Generation Map"
 msgstr "Ramani ya Kizazi cha Kikundi"
 
-#: templates/login.php:32
+#: templates/login.php:33
 msgid "Username or Email Address"
 msgstr "Jina la mtumiaji au Barua pepe"
 
-#: templates/login.php:38 templates/register.php:39
-msgid "Password"
-msgstr "Nenosiri"
-
-#: templates/login.php:48
+#: templates/login.php:49
 msgid "Login"
 msgstr "Ingia"
 
-#: templates/login.php:54 templates/login.php:55
+#: templates/login.php:55 templates/login.php:56
 msgid "Create Account"
 msgstr "Tengeneza akaunti"
 
-#: templates/login.php:65
+#: templates/login.php:66
 msgid "Forgot Password?"
 msgstr "Umesahau nywila?"
 
@@ -392,21 +641,25 @@ msgstr "Kinatumia"
 msgid "Autolink Home"
 msgstr "Autolink Nyumbani"
 
-#: templates/register.php:31
-msgid "Username"
-msgstr "Jina la mtumiaji"
-
-#: templates/register.php:35
-msgid "Email"
-msgstr "Barua pepe"
-
-#: templates/register.php:44
+#: templates/register.php:45
 msgid "Confirm Password"
 msgstr "Thibitisha Nenosiri"
 
-#: templates/register.php:52
+#: templates/register.php:53
 msgid "Register"
 msgstr "Sajili"
+
+#~ msgid "https://github.com/DiscipleTools/disciple-tools-autolink"
+#~ msgstr "https://github.com/DiscipleTools/disciple-tools-autolink"
+
+#~ msgid ""
+#~ "Provides a simplified interface for managing and visualizing your "
+#~ "Disciple.Tools network. Share access with your downstream leaders to "
+#~ "easily build your group tree."
+#~ msgstr ""
+#~ "Hutoa kiolesura kilichorahisishwa cha kudhibiti na kuibua mtandao wako wa "
+#~ "Disciple.Tools. Shiriki ufikiaji na viongozi wako wa chini ili kuunda mti "
+#~ "wa kikundi chako kwa urahisi."
 
 #~ msgid "Move these to the"
 #~ msgstr "Hamishia hizi kwa"
