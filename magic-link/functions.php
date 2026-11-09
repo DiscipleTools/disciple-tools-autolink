@@ -319,11 +319,49 @@ class Disciple_Tools_Autolink_Magic_Functions {
 		return $path ? trailingslashit( $path ) : '/';
 	}
 
-	public function add_session_leader() {
+	/**
+	 * Remember the leader whose share link was opened.
+	 *
+	 * On multisite the value is `{blog_id}:{leader_id}`. The root site of a
+	 * subdirectory network scopes its cookie to `/`, which every other site
+	 * also receives, so the path alone can't keep sites apart.
+	 *
+	 * @param int $leader_id Contact ID of the leader on this site.
+	 */
+	public function set_session_leader( $leader_id ) {
+		$value = is_multisite() ? get_current_blog_id() . ':' . absint( $leader_id ) : absint( $leader_id );
+
+		setcookie( 'dt_autolink_leader_id', $value, time() + ( 86400 * 30 ), $this->leader_cookie_path() );
+	}
+
+	/**
+	 * The leader remembered for this site, if any.
+	 *
+	 * On multisite a cookie set by another site, or one without a blog ID, is
+	 * ignored.
+	 *
+	 * @return int Contact ID of the leader, or 0.
+	 */
+	public function get_session_leader_id() {
 		if ( ! isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
-			return;
+			return 0;
 		}
-		$leader_id = sanitize_text_field( wp_unslash( (string) $_COOKIE['dt_autolink_leader_id'] ) ) ?? null;
+		$value = sanitize_text_field( wp_unslash( (string) $_COOKIE['dt_autolink_leader_id'] ) );
+
+		if ( ! is_multisite() ) {
+			return absint( $value );
+		}
+
+		$parts = explode( ':', $value );
+		if ( count( $parts ) !== 2 || absint( $parts[0] ) !== get_current_blog_id() ) {
+			return 0;
+		}
+
+		return absint( $parts[1] );
+	}
+
+	public function add_session_leader() {
+		$leader_id = $this->get_session_leader_id();
 		if ( ! $leader_id ) {
 			return;
 		}
@@ -347,10 +385,8 @@ class Disciple_Tools_Autolink_Magic_Functions {
 			DT_Posts::update_post( 'contacts', $contact, $fields, true, false );
 		}
 
-		if ( isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
-			unset( $_COOKIE['dt_autolink_leader_id'] );
-			setcookie( 'dt_autolink_leader_id', '', time() - 3600, $this->leader_cookie_path() );
-		}
+		unset( $_COOKIE['dt_autolink_leader_id'] );
+		setcookie( 'dt_autolink_leader_id', '', time() - 3600, $this->leader_cookie_path() );
 	}
 
 	public function survey_completed() {

@@ -12,7 +12,9 @@ On a subdirectory network every site shares the host (`example.com/site2/`, `exa
 
 ## Scope cookies to the site
 
-`dt_autolink_leader_id` holds the coach's contact ID. Contact IDs are per site, so a cookie on `/` would carry one site's coach into another site's registration. Set and clear it on `leader_cookie_path()`, which is the site's own path. `add_session_leader()` also skips a leader that doesn't exist on the current site.
+`dt_autolink_leader_id` holds the coach's contact ID. Contact IDs are per site, so a cookie on `/` would carry one site's coach into another site's registration. Set and clear it on `leader_cookie_path()`, which is the site's own path.
+
+The path alone isn't enough: the root site of a subdirectory network has the path `/`, and every other site receives its cookies. So on multisite the value is `{blog_id}:{leader_id}`, and a site ignores a cookie that names another blog or has no blog ID. Read and write it only through `set_session_leader()` and `get_session_leader_id()`. `add_session_leader()` also skips a leader that doesn't exist on the current site.
 
 ## Accounts from another site join automatically
 
