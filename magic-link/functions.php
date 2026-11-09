@@ -250,9 +250,12 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	 *
 	 * On multisite a login is network-wide, so someone who registered on one
 	 * site can sign in to another site's Autolink. Without a role here they get
-	 * an app with no contact behind it. Anyone can register through Autolink, so
-	 * joining them is no wider than that, and matches the theme's own login.
+	 * an app with no contact behind it, so they join with the default role.
 	 * Adding them fires the theme's hook that creates their contact.
+	 *
+	 * This deliberately ignores the site's registration setting: a site running
+	 * Autolink takes open sign-ups through it, so letting an existing account
+	 * join is no wider than registering a new one. See docs/multisite.md.
 	 */
 	public function join_current_site() {
 		$user_id = get_current_user_id();

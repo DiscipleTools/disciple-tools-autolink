@@ -78,6 +78,15 @@ class Disciple_Tools_Autolink_Login_App extends DT_Magic_Url_Base
         }
     }
 
+    /**
+     * `/autolink` matches no WordPress content, so the main query has already
+     * flagged it a 404. The page renders, but the status said otherwise.
+     */
+    public function theme_redirect() {
+        status_header( 200 );
+        parent::theme_redirect();
+    }
+
     public function ready() {
         if ( is_user_logged_in() ) {
             $this->functions->activate();
