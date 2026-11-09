@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Disciple.Tools - Autolink 1.0.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disciple-tools-"
 "autolink\n"
-"POT-Creation-Date: 2026-10-27T09:38:56+00:00\n"
+"POT-Creation-Date: 2026-11-09T12:03:22+00:00\n"
 "PO-Revision-Date: 2024-10-15 14:59+0000\n"
 "Last-Translator: Kyle Koval <kyle.koval@gmail.com>\n"
 "Language-Team: Italian <https://translate.disciple.tools/projects/disciple-"
@@ -48,7 +48,7 @@ msgstr "OK"
 msgid "Edit Record"
 msgstr "Modifica Record"
 
-#: charts/groups-genmap.php:115 controllers/admin-general.php:44
+#: charts/groups-genmap.php:115 controllers/admin-training.php:28
 msgid "Reset"
 msgstr "Reimposta"
 
@@ -68,77 +68,87 @@ msgstr "Apri Record"
 msgid "The map could not be loaded. Please try again."
 msgstr ""
 
-#: controllers/admin-general.php:26
+#: controllers/admin-general.php:35
 msgid "Hours"
 msgstr ""
 
-#: controllers/admin-general.php:27
+#: controllers/admin-general.php:36
 msgid "Days"
 msgstr ""
 
-#: controllers/admin-general.php:28
+#: controllers/admin-general.php:37
 msgid "Weeks"
 msgstr ""
 
-#: controllers/admin-general.php:29
+#: controllers/admin-general.php:38
 msgid "Months"
 msgstr ""
 
-#: controllers/admin-general.php:30
+#: controllers/admin-general.php:39
 msgid "Never expires"
 msgstr ""
 
-#: controllers/admin-general.php:37
+#: controllers/admin-training.php:21
 msgid "Training videos could not be loaded. Resetting to default content."
 msgstr ""
 "Non era possibile caricare i video per la formazione. Ripristinando ai "
 "contenuti predefiniti."
 
-#: controllers/admin-general.php:41
+#: controllers/admin-training.php:25 controllers/admin.php:11
 msgid "Training Videos"
 msgstr "Video della Formazione"
 
-#: controllers/admin-general.php:42
+#: controllers/admin-training.php:26
 msgid "Title"
 msgstr "Titolo"
 
-#: controllers/admin-general.php:43
+#: controllers/admin-training.php:27
 msgid "Embed"
 msgstr "Embed"
 
-#: controllers/admin-general.php:45 controllers/contacts.php:81
+#: controllers/admin-training.php:29 controllers/contacts.php:81
 msgid "Add"
 msgstr "Aggiungere"
 
-#: controllers/admin-general.php:46
+#: controllers/admin-training.php:30
 msgid "Remove"
 msgstr "Rimuovere"
 
-#: controllers/admin-general.php:47
+#: controllers/admin-training.php:31
 msgid "Are you sure you want to reset the training videos to default content?"
 msgstr ""
 "Sei sicuro di voler ripristinare i video per la formazione ai contenuti "
 "predefiniti?"
 
-#: controllers/admin-general.php:48
+#: controllers/admin-training.php:32
 msgid "Are you sure you want to remove this video?"
 msgstr "Sei sicuro di voler eliminare questo video?"
 
-#: controllers/admin-general.php:49
+#: controllers/admin-training.php:33
 msgid "Up"
 msgstr "Su"
 
-#: controllers/admin-general.php:50
+#: controllers/admin-training.php:34
 msgid "Down"
 msgstr "Giù"
 
-#: controllers/admin-general.php:119
+#: controllers/admin-training.php:105
 msgid "Invalid training videos."
 msgstr "I video per la formazione non sono validi."
 
+#: controllers/admin.php:10
+msgid "General"
+msgstr ""
+
+#: controllers/admin.php:20
+#, fuzzy
+#| msgid "Autolink Home"
+msgid "Autolink Settings"
+msgstr "Autolink Home"
+
 #. translators: %s: plural name of the group post type, e.g. "Churches".
 #: controllers/app.php:34 controllers/controller.php:44
-#: magic-link/functions.php:132 magic-link/functions.php:371
+#: magic-link/functions.php:132 magic-link/functions.php:449
 #, php-format
 msgid "My %s"
 msgstr "Le mie %s"
@@ -150,7 +160,7 @@ msgstr "Data d'inizio della chiesa"
 #. translators: %s: singular name of the group post type, e.g. "Church".
 #. translators: %s: singular name of the contact post type, e.g. "Contact".
 #: controllers/app.php:37 controllers/contacts.php:43
-#: controllers/controller.php:56 magic-link/functions.php:379
+#: controllers/controller.php:56 magic-link/functions.php:457
 #, php-format
 msgid "View %s"
 msgstr "Visualizza %s"
@@ -307,17 +317,17 @@ msgid "Member of %s"
 msgstr ""
 
 #: controllers/controller.php:35 magic-link/functions.php:127
-#: magic-link/functions.php:364
+#: magic-link/functions.php:442
 msgid "Hello,"
 msgstr "Ciao,"
 
 #: controllers/controller.php:38 magic-link/functions.php:128
-#: magic-link/functions.php:367
+#: magic-link/functions.php:445
 msgid "Coached by"
 msgstr "Il suo coach è"
 
 #: controllers/controller.php:39 magic-link/functions.php:129
-#: magic-link/functions.php:368
+#: magic-link/functions.php:446
 msgid "My Link"
 msgstr "Il mio link"
 
@@ -325,21 +335,21 @@ msgstr "Il mio link"
 msgid "This is your own link. Save it so you can get back to this app."
 msgstr ""
 
-#: controllers/controller.php:42 magic-link/functions.php:369
+#: controllers/controller.php:42 magic-link/functions.php:447
 msgid "Copy this link and share it with people you are coaching."
 msgstr "Copia questo link e condividilo con le persone che segui come coach."
 
 #. translators: %s: singular name of the group post type, e.g. "Church".
-#: controllers/controller.php:59 magic-link/functions.php:382
+#: controllers/controller.php:59 magic-link/functions.php:460
 #, php-format
 msgid "%s Health"
 msgstr "%s Salute"
 
-#: controllers/controller.php:60 magic-link/functions.php:383
+#: controllers/controller.php:60 magic-link/functions.php:461
 msgid "Tree"
 msgstr "Albero"
 
-#: controllers/controller.php:61 magic-link/functions.php:384
+#: controllers/controller.php:61 magic-link/functions.php:462
 msgid "GenMap"
 msgstr "Mappa Generazionale"
 
@@ -535,28 +545,28 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: disciple-tools-autolink.php:192 magic-link/actor.php:742
+#: disciple-tools-autolink.php:197 magic-link/actor.php:743
 msgid "Autolink"
 msgstr "Autolink"
 
-#: magic-link/actor.php:660
+#: magic-link/actor.php:661
 msgid "No record to save the language to."
 msgstr ""
 
 #. translators: %s: the name of the contact who made the change.
-#: magic-link/actor.php:741
+#: magic-link/actor.php:742
 #, fuzzy, php-format
 #| msgid "Autolink"
 msgid "%s (via Autolink)"
 msgstr "Autolink"
 
 #. translators: %s: the name of the contact who created the record.
-#: magic-link/actor.php:752
+#: magic-link/actor.php:753
 #, php-format
 msgid "Created through Autolink by %s"
 msgstr ""
 
-#: magic-link/actor.php:753
+#: magic-link/actor.php:754
 #, fuzzy
 #| msgid "Back to AutoLink"
 msgid "Created through Autolink"
@@ -604,17 +614,17 @@ msgstr "%s assegnato a coloro che segui come coach"
 msgid "Close"
 msgstr ""
 
-#: magic-link/functions.php:342
+#: magic-link/functions.php:420
 msgid "How many leaders are you coaching?"
 msgstr "Per quanti leader sei il loro coach?"
 
 #. translators: %s: lowercased plural name of the group post type, e.g. "churches".
-#: magic-link/functions.php:347
+#: magic-link/functions.php:425
 #, php-format
 msgid "How many %s are you leading?"
 msgstr "Quanti %s stai guidando?"
 
-#: magic-link/login-app.php:144
+#: magic-link/login-app.php:153
 msgid "Error: Invalid username/password combination."
 msgstr "Errore: nome utente o password invalido."
 
