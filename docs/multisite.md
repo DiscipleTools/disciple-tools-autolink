@@ -18,9 +18,9 @@ The path alone isn't enough: the root site of a subdirectory network has the pat
 
 ## Accounts from another site join automatically
 
-**Decision:** someone who already has an account on another site in the network, and signs in to this site's Autolink, is added to this site with its default role. This also covers someone already signed in elsewhere who opens this site's `/autolink`. The join happens in `join_current_site()`, called from `activate()`. Adding them fires the theme's `add_user_to_blog` hook, which creates their contact.
+**Decision:** someone who already has an account on another site in the network, and signs in to this site's Autolink, is added to this site with WordPress's `default_role`, the same role the Register form gives a new account (`wp_create_user()` uses it). This also covers someone already signed in elsewhere who opens this site's `/autolink`. The join happens in `join_current_site()`, called from `activate()`. Adding them fires the theme's `add_user_to_blog` hook, which creates their contact.
 
-**This ignores the site's registration setting on purpose.** Autolink is an open sign-up app: its Register form doesn't check `dt_can_users_register()`, and a site that doesn't want open sign-ups won't run Autolink. Letting an existing account join therefore gives no wider access than registering a new one would. It also matches the theme's own SSO login, which adds existing network users to the site they sign in to.
+**This ignores the site's registration setting on purpose.** Autolink is an open sign-up app: its Register form doesn't check `dt_can_users_register()`, and a site that doesn't want open sign-ups won't run Autolink. Letting an existing account join therefore gives no wider access than registering a new one would. The theme's SSO login also adds existing network users to the site they sign in to, but with its own DT login default role, which falls back to `registered` (no permissions). Autolink doesn't use that role, because a joiner with no permissions would land in an app they can't use.
 
 **Why not leave them as they are:** a network login is valid on every site. Without a role here they would get an Autolink app with no contact behind it, so nothing they did in it would work.
 

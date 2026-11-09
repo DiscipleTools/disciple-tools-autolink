@@ -250,7 +250,10 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	 *
 	 * On multisite a login is network-wide, so someone who registered on one
 	 * site can sign in to another site's Autolink. Without a role here they get
-	 * an app with no contact behind it, so they join with the default role.
+	 * an app with no contact behind it, so they join with WordPress's
+	 * `default_role`, the role the Register form's wp_create_user() gives a new
+	 * account. Not the theme's DT login default role: that falls back to
+	 * `registered`, which has no permissions to use the app.
 	 * Adding them fires the theme's hook that creates their contact.
 	 *
 	 * This deliberately ignores the site's registration setting: a site running
