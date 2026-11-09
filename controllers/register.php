@@ -66,7 +66,7 @@ class Disciple_Tools_Autolink_Register_Controller extends Disciple_Tools_Autolin
      */
     public function show( $params = [] ) {
         $logo_url    = $this->functions->fetch_logo();
-        $form_action = '/autolink?action=register';
+        $form_action = add_query_arg( 'action', 'register', $this->functions->get_link_url() );
         $error       = $params['error'] ?? '';
         $username    = $params['username'] ?? '';
         $email       = $params['email'] ?? '';

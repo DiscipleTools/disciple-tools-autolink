@@ -95,8 +95,9 @@ class Disciple_Tools_Autolink_Magic_Contact_App extends DT_Magic_Url_Base
     public function ready() {
         $leader = DT_Posts::get_post( $this->post_type, $this->parts['post_id'], true, false );
 
-        if ( !isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
-            setcookie( 'dt_autolink_leader_id', $leader['ID'], time() + ( 86400 * 30 ), "/" );
+        // A cookie from another site on the network doesn't count, so this site's is still set.
+        if ( !is_wp_error( $leader ) && !$this->functions->get_session_leader_id() ) {
+            $this->functions->set_session_leader( $leader['ID'] );
         }
 
         $this->functions->redirect_to_link();

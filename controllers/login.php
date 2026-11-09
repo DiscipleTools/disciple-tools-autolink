@@ -27,7 +27,7 @@ class Disciple_Tools_Autolink_Login_Controller extends Disciple_Tools_Autolink_C
             $error  = apply_filters( 'login_errors', $error );
 
             //If the error links to lost password, inject the 3/3rds redirect
-            $error = str_replace( '?action=lostpassword', '?action=lostpassword?&redirect_to=/' . $this->root, $error );
+            $error = str_replace( '?action=lostpassword', '?action=lostpassword&amp;redirect_to=' . rawurlencode( $this->functions->get_link_url() ), $error );
 
             return $this->show( [ 'error' => $error, 'username' => $username, 'password' => $password ] );
         }
@@ -50,8 +50,8 @@ class Disciple_Tools_Autolink_Login_Controller extends Disciple_Tools_Autolink_C
      */
     public function show( $params = [] ) {
         $logo_url     = $this->functions->fetch_logo();
-        $register_url = '/autolink?action=register';
-        $form_action  = '/autolink?action=login';
+        $register_url = add_query_arg( 'action', 'register', $this->functions->get_link_url() );
+        $form_action  = add_query_arg( 'action', 'login', $this->functions->get_link_url() );
         $username     = $params['username'] ?? '';
         $password     = $params['password'] ?? '';
         $reset_url    = wp_lostpassword_url( $this->functions->get_link_url() );

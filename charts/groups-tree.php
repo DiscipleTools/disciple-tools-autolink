@@ -45,7 +45,7 @@ class Disciple_Tools_Autolink_Groups_Tree {
 		$plugin_url  = plugins_url() . '/disciple-tools-autolink';
 		$plugin_path = WP_PLUGIN_DIR . '/disciple-tools-autolink';
 
-		wp_register_script( 'jquery-touch-punch', '/wp-includes/js/jquery/jquery.ui.touch-punch.js' ); // @phpcs:ignore
+		wp_register_script( 'jquery-touch-punch', includes_url( 'js/jquery/jquery.ui.touch-punch.js' ) ); // @phpcs:ignore
 		wp_enqueue_script( 'portal-app-domenu-js', $plugin_url . '/magic-link/jquery.domenu-0.100.77.min.js', [ 'jquery' ],
         filemtime( $plugin_path . '/magic-link/jquery.domenu-0.100.77.min.js' ), false );
 
