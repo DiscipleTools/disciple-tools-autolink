@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
 require_once "tab-general.php";
+require_once "tab-training.php";
 
 /**
  * Class Disciple_Tools_Autolink_Menu

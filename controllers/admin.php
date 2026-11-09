@@ -6,21 +6,25 @@ class Disciple_Tools_Autolink_Admin_Controller extends Disciple_Tools_Autolink_C
 			wp_die( 'You do not have sufficient permissions to access this page.' );
 		}
 
-		if ( isset( $_GET['tab'] ) ) {
-			$tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
-		} else {
-			$tab = 'general';
+		$tabs = [
+			'general'  => __( 'General', 'disciple-tools-autolink' ),
+			'training' => __( 'Training Videos', 'disciple-tools-autolink' ),
+		];
+
+		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general';
+		if ( ! isset( $tabs[ $current_tab ] ) ) {
+			$current_tab = 'general';
 		}
 
 		$link       = 'admin.php?page=disciple_tools_autolink&tab=';
-		$content    = "";
-		$page_title = "Autolink Settings";
+		$page_title = __( 'Autolink Settings', 'disciple-tools-autolink' );
 
-		switch ( $tab ) {
-			case 'general':
-				$tab = new Disciple_Tools_Autolink_Tab_General();
+		switch ( $current_tab ) {
+			case 'training':
+				$tab = new Disciple_Tools_Autolink_Tab_Training();
 				break;
 			default:
+				$tab = new Disciple_Tools_Autolink_Tab_General();
 				break;
 		}
 

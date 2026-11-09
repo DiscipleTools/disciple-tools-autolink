@@ -600,7 +600,8 @@ class Disciple_Tools_Autolink_Actor {
 			case 'app':
 				return is_user_logged_in() && get_current_user_id() === $post_id;
 			case 'contact':
-				return ! self::contact_has_login( $post_id )
+				return ( new Disciple_Tools_Autolink_Settings() )->contacts_enabled()
+					&& ! self::contact_has_login( $post_id )
 					&& ! Disciple_Tools_Autolink_Contact_Links::is_expired( $post_id );
 			default:
 				return false;

@@ -189,6 +189,10 @@ privilege, so writes go through the whitelisted `update_field` endpoint instead.
 
 `admin/admin-menu-and-tabs.php` adds a submenu under `dt_extensions` gated on `manage_dt`, delegating to `Admin_Controller` → `templates/admin/`. `admin/settings.php` is the option layer: `defaults()` is the single source of truth, `setup_options()` seeds missing options on instantiation, and `get_option()` falls back to the default. Add new settings there — including the Vimeo training-video list, which is stored as a JSON option but seeded from localized defaults.
 
+The admin page has two tabs, each a separate form saved by its own controller: **General** (`controllers/admin-general.php`, grouped into the Disciple.Tools menu / the Autolink app menu (training, survey) / groups / contacts) and **Training Videos** (`controllers/admin-training.php`). A tab's `save()` must only write the options its own form posts — an unchecked box posts nothing, so a shared save would reset the other tab's checkboxes.
+
+**Contacts are a switch, off by default** (`disciple_tools_autolink_enable_contacts`, `Settings::contacts_enabled()`), because they arrived after the plugin's first release. Off means: `contact-link-app.php` is never loaded (so the theme neither serves contact links nor lists one on the Apps tile), `Actor::may_act_as()` refuses the `contact` type, the Contacts tab is hidden, and the contacts/upgrade routes and the `contact_link` REST action are closed in `app-routes.php`. Anything new that belongs to contacts needs the same check.
+
 ## Conventions and gotchas
 
 - **Text domain is `disciple-tools-autolink`**, not the theme's `disciple_tools`. A handful of mapbox strings deliberately reuse `disciple_tools` to inherit theme translations.
