@@ -80,7 +80,7 @@ class Disciple_Tools_Autolink_Group_Controller extends Disciple_Tools_Autolink_C
 		}, $group['leaders'] ?? [] );
 
 		$leader_values = $this->leader_values( $leader_values, $leader_options );
-		$parent_group_field_callback = '/wp-json/autolink/v1/' . $magic_link->parts['type'] . "?" . http_build_query( [
+		$parent_group_field_callback = rest_url( 'autolink/v1/' . $magic_link->parts['type'] ) . "?" . http_build_query( [
 				'action' => 'parent_group_field',
 				'parts'  => $magic_link->parts,
         ] );

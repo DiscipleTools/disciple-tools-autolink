@@ -17,7 +17,7 @@ class Disciple_Tools_Autolink_Tree_Controller extends Disciple_Tools_Autolink_Co
 		$data       = $this->global_data();
 		extract( $data );
 		$action       = 'tree';
-		$fetch_url    = '/wp-json/autolink/v1/' . $magic_link->parts['type'];
+		$fetch_url    = rest_url( 'autolink/v1/' . $magic_link->parts['type'] );
 		$parts        = $magic_link->parts;
 		$translations = [
 			/* translators: %s: singular name of the group post type, e.g. "Church". */

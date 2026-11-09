@@ -126,7 +126,7 @@ class Disciple_Tools_Autolink_Login_App extends DT_Magic_Url_Base
                     $this->register_controller->process();
                     break;
                 default:
-                    wp_redirect( '/' . $this->root );
+                    wp_redirect( $this->functions->get_link_url() );
             }
             return;
         }

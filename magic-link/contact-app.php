@@ -96,7 +96,7 @@ class Disciple_Tools_Autolink_Magic_Contact_App extends DT_Magic_Url_Base
         $leader = DT_Posts::get_post( $this->post_type, $this->parts['post_id'], true, false );
 
         if ( !isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
-            setcookie( 'dt_autolink_leader_id', $leader['ID'], time() + ( 86400 * 30 ), "/" );
+            setcookie( 'dt_autolink_leader_id', $leader['ID'], time() + ( 86400 * 30 ), $this->functions->leader_cookie_path() );
         }
 
         $this->functions->redirect_to_link();

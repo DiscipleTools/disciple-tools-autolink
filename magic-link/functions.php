@@ -220,6 +220,8 @@ class Disciple_Tools_Autolink_Magic_Functions {
 	public function activate() {
 		global $wpdb;
 
+		$this->join_current_site();
+
 		$preference_key = 'autolink-app';
 		$meta_key       = $wpdb->prefix . DT_Magic_URL::get_public_key_meta_key( 'autolink', 'app' );
 
@@ -241,6 +243,25 @@ class Disciple_Tools_Autolink_Magic_Functions {
 			add_user_meta( get_current_user_id(), $meta_key, DT_Magic_URL::create_unique_key() );
 			Disciple_Tools_Users::app_switch( get_current_user_id(), $preference_key );
 		}
+	}
+
+	/**
+	 * Make the current user a member of this site.
+	 *
+	 * On multisite a login is network-wide, so someone who registered on one
+	 * site can sign in to another site's Autolink. Without a role here they get
+	 * an app with no contact behind it. Anyone can register through Autolink, so
+	 * joining them is no wider than that, and matches the theme's own login.
+	 * Adding them fires the theme's hook that creates their contact.
+	 */
+	public function join_current_site() {
+		$user_id = get_current_user_id();
+
+		if ( ! is_multisite() || ! $user_id || is_user_member_of_blog( $user_id ) ) {
+			return;
+		}
+
+		add_user_to_blog( get_current_blog_id(), $user_id, get_option( 'default_role', 'multiplier' ) );
 	}
 
 	public function is_activated() {
@@ -281,6 +302,20 @@ class Disciple_Tools_Autolink_Magic_Functions {
 		return ( json_last_error() == JSON_ERROR_NONE );
 	}
 
+	/**
+	 * The path the leader cookie is scoped to.
+	 *
+	 * On a subdirectory multisite every site shares the host, so a cookie on `/`
+	 * would carry one site's leader (a contact ID on that site) into another.
+	 *
+	 * @return string
+	 */
+	public function leader_cookie_path() {
+		$path = wp_parse_url( site_url( '/' ), PHP_URL_PATH );
+
+		return $path ? trailingslashit( $path ) : '/';
+	}
+
 	public function add_session_leader() {
 		if ( ! isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
 			return;
@@ -291,10 +326,11 @@ class Disciple_Tools_Autolink_Magic_Functions {
 		}
 
 		$contact        = Disciple_Tools_Users::get_contact_for_user( get_current_user_id() );
-		$contact_record = DT_Posts::get_post( 'contacts', $contact, true, false );
+		$contact_record = $contact ? DT_Posts::get_post( 'contacts', $contact, true, false ) : null;
 		$leader         = DT_Posts::get_post( 'contacts', $leader_id, true, false );
 
-		if ( ! count( $contact_record['coached_by'] ) ) {
+		if ( $contact_record && ! is_wp_error( $contact_record ) && ! is_wp_error( $leader )
+			&& empty( $contact_record['coached_by'] ) ) {
 			$fields = [
 				"coached_by"  => [
 					"values"       => [
@@ -310,7 +346,7 @@ class Disciple_Tools_Autolink_Magic_Functions {
 
 		if ( isset( $_COOKIE['dt_autolink_leader_id'] ) ) {
 			unset( $_COOKIE['dt_autolink_leader_id'] );
-			setcookie( 'dt_autolink_leader_id', '', time() - 3600, '/' );
+			setcookie( 'dt_autolink_leader_id', '', time() - 3600, $this->leader_cookie_path() );
 		}
 	}
 

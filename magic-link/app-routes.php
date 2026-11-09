@@ -232,7 +232,7 @@ trait Disciple_Tools_Autolink_App_Routes {
 					$this->upgrade_controller->process();
 					break;
 				default:
-					wp_redirect( '/' . $this->root );
+					wp_redirect( $this->functions->get_link_url() );
 			}
 
 			return;
