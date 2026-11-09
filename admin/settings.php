@@ -35,6 +35,9 @@ class Disciple_Tools_Autolink_Settings {
 			'disciple_tools_autolink_show_in_menu'                 => true,
 			'disciple_tools_autolink_show_survey'                  => true,
 			'disciple_tools_autolink_show_training'                => true,
+			// Contacts arrived after Autolink was first released, so a site has to
+			// turn them on. Off covers the Contacts tab and contact links both.
+			'disciple_tools_autolink_enable_contacts'              => false,
 			// How long a contact link lasts from when it is copied. See
 			// Disciple_Tools_Autolink_Contact_Links.
 			'disciple_tools_autolink_contact_link_validity_amount' => 1,
@@ -73,6 +76,18 @@ class Disciple_Tools_Autolink_Settings {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Whether the contacts feature is on: the Contacts tab and its screens, and
+	 * contact links - the app served to a contact with no login.
+	 *
+	 * @return bool
+	 */
+	public function contacts_enabled(): bool {
+		$enable_contacts = $this->get_option( 'disciple_tools_autolink_enable_contacts' );
+
+		return $enable_contacts === '1' || $enable_contacts === true;
 	}
 
 	/**

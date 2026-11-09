@@ -88,6 +88,7 @@ class Disciple_Tools_Autolink {
 		require_once __DIR__ . '/controllers/field.php';
 		require_once __DIR__ . '/controllers/admin.php';
 		require_once __DIR__ . '/controllers/admin-general.php';
+		require_once __DIR__ . '/controllers/admin-training.php';
 		require_once __DIR__ . '/controllers/training.php';
 		require_once __DIR__ . '/controllers/language.php';
 		require_once __DIR__ . '/charts/groups-tree.php';
@@ -102,7 +103,11 @@ class Disciple_Tools_Autolink {
 		require_once __DIR__ . '/magic-link/contact-app.php';
 		require_once __DIR__ . '/magic-link/user-app.php';
 		// The contact app shares the user app's routing trait, so it loads after it.
-		require_once __DIR__ . '/magic-link/contact-link-app.php';
+		// Left unregistered while contacts are off, so the theme neither serves
+		// contact links nor offers one on a contact's Apps tile.
+		if ( ( new Disciple_Tools_Autolink_Settings() )->contacts_enabled() ) {
+			require_once __DIR__ . '/magic-link/contact-link-app.php';
+		}
 		require_once __DIR__ . '/magic-link/login-app.php';
 
 		if ( is_admin() ) {

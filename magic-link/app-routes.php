@@ -124,12 +124,30 @@ trait Disciple_Tools_Autolink_App_Routes {
 	}
 
 	/**
+	 * Whether the contacts feature is turned on in the admin.
+	 *
+	 * @return bool
+	 */
+	public function contacts_enabled() {
+		return ( new Disciple_Tools_Autolink_Settings() )->contacts_enabled();
+	}
+
+	/**
 	 * Map routes to controllers
 	 */
 	public function routes() {
 		$actor  = Disciple_Tools_Autolink_Actor::current();
 		$action = sanitize_key( wp_unslash( $_GET['action'] ?? '' ) );
 		$type   = strtoupper( sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ?? 'GET' ) ) );
+
+		// The contacts screens, and upgrading a contact link to a login, are part
+		// of the contacts feature. With it off they lead back to the app.
+		$contact_actions = [ 'contacts', 'add-contact', 'edit-contact', 'view-contact', 'upgrade' ];
+		if ( in_array( $action, $contact_actions, true ) && ! $this->contacts_enabled() ) {
+			wp_redirect( $this->functions->get_app_link() );
+
+			return;
+		}
 
 		if ( $type === 'GET' ) {
 			switch ( $action ) {
@@ -319,6 +337,10 @@ trait Disciple_Tools_Autolink_App_Routes {
 			case 'switch_language':
 				return $this->language_controller->update( $request, $params, $actor );
 			case 'contact_link':
+				if ( ! $this->contacts_enabled() ) {
+					return new WP_Error( __METHOD__, 'Contacts are disabled', [ 'status' => 403 ] );
+				}
+
 				return $this->contacts_controller->link( $request, $params, $actor );
 			case 'genmap_create_node':
 				return $this->genmap_controller->create_node( $request, $params, $actor );
